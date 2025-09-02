@@ -43,9 +43,11 @@ int expression(int *result){
     if (next_token != PLUS){
         return 0;
     }
-    if (expression(result) < 0){
+    int rhs;
+    if (expression(&rhs) < 0){
         return -1;
     }
+    *result += rhs;
     return 0;
 }
 int term(int *result){
@@ -57,9 +59,11 @@ int term(int *result){
     if (next_token != ATERISK){
         return 0;
     }
-    if (term(result) < 0){
+    int rhs;
+    if (term(&rhs) < 0){
         return -1;
     }
+    *result *= rhs;
     return 0;
 }
 int factor(int *result){
