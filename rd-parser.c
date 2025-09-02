@@ -7,7 +7,8 @@
 int expression(int *result);
 int term(int *result);
 int factor(int *result);
-int get_token();
+int digit(int *result);
+int lexeme();
 
 /* TOKEN CODES */
 #define ADD 43
@@ -15,10 +16,31 @@ int get_token();
 #define LEFT_PAREN 40
 #define RIGHT_PAREN 41
 
+/* GLOBAL VAR */
+int next_token;
+
 int main(void){
     /* INPUT */
-
-    /* PARSING */
-
+    int result;
+    if (lexeme() < 0){
+        fprintf(stderr, "Syntax Error\n");
+        exit(1);
+    }    
+    if (expression(&result) < 0){
+        fprintf(stderr, "Syntax Error\n");
+        exit(1);
+    }
     /* OUTPUT */
+    printf("%d\n", result);
+    exit(0);
+}
+int expression(int *result){
+    /* E -> E + T | T */
+
+}
+int lexeme(){
+    if ((next_token = getchar()) == '\n'){
+        return -1;
+    }
+    return 0;
 }
