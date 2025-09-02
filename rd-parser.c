@@ -39,9 +39,11 @@ int expression(int *result){
     if (term(result) < 0){
         return -1;
     }
-// lexeme?
     if (next_token != PLUS){
         return 0;
+    }
+    if (lexeme() < 0){
+        return -1;
     }
     int rhs;
     if (expression(&rhs) < 0){
@@ -55,9 +57,14 @@ int term(int *result){
     if (factor(result) < 0){
         return -1;
     }
-// lexeme?
+    if (lexeme() < 0){
+        return -1;
+    }
     if (next_token != ATERISK){
         return 0;
+    }
+    if (lexeme() < 0){
+        return -1;
     }
     int rhs;
     if (term(&rhs) < 0){
@@ -75,7 +82,6 @@ int factor(int *result){
         if (expression(result) < 0){
             return -1;
         }
-// lexeme?
         if (next_token != RIGHT_PAREN){
             return -1;
         }
@@ -93,7 +99,7 @@ int digit(int *result){
     return 0;
 }
 int lexeme(){
-    if ((next_token = getchar()) == '\n'){
+    if ((next_token = getchar()) == EOF){
         return -1;
     }
     return 0;
