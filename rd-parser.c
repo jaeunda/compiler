@@ -38,6 +38,12 @@ int expression(int *result){
     /* E -> E + T | T */
 
 }
+int digit(int *result){
+    if (next_token < (int)'0' || next_token > (int)'9')
+        return -1;
+    *result = next_token - (int)'0';
+    return 0;
+}
 int lexeme(){
     if ((next_token = getchar()) == '\n'){
         return -1;
