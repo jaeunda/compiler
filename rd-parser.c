@@ -30,6 +30,10 @@ int main(void){
         fprintf(stderr, "Syntax Error\n");
         exit(1);
     }
+    if (next_token != (int)'\n'){
+        fprintf(stderr, "Syntax Error\n");
+        exit(1);
+    }
     /* OUTPUT */
     printf("%d\n", result);
     exit(0);
