@@ -48,6 +48,20 @@ int expression(int *result){
     }
     return 0;
 }
+int term(int *result){
+    /* T -> F * T | F */
+    if (factor(result) < 0){
+        return -1;
+    }
+// lexeme?
+    if (next_token != ATERISK){
+        return 0;
+    }
+    if (term(result) < 0){
+        return -1;
+    }
+    return 0;
+}
 int digit(int *result){
     if (next_token < (int)'0' || next_token > (int)'9')
         return -1;
