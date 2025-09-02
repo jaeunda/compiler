@@ -62,6 +62,26 @@ int term(int *result){
     }
     return 0;
 }
+int factor(int *result){
+    /* F -> digit | '(' E ')' */
+    if (next_token == LEFT_PAREN){
+        if (lexeme() < 0){
+            return -1;
+        }
+        if (expression(result) < 0){
+            return -1;
+        }
+// lexeme?
+        if (next_token != RIGHT_PAREN){
+            return -1;
+        }
+        return 0;
+    }
+    if (digit(result) < 0){
+        return -1;
+    }
+    return 0;
+}
 int digit(int *result){
     if (next_token < (int)'0' || next_token > (int)'9')
         return -1;
