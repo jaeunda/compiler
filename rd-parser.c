@@ -11,8 +11,8 @@ int digit(int *result);
 int lexeme();
 
 /* TOKEN CODES */
-#define ADD 43
-#define PRODUCT 42
+#define PLUS 43
+#define ATERISK 42
 #define LEFT_PAREN 40
 #define RIGHT_PAREN 41
 
@@ -35,8 +35,18 @@ int main(void){
     exit(0);
 }
 int expression(int *result){
-    /* E -> E + T | T */
-
+    /* E -> T + E | T */
+    if (term(result) < 0){
+        return -1;
+    }
+// lexeme?
+    if (next_token != PLUS){
+        return 0;
+    }
+    if (expression(result) < 0){
+        return -1;
+    }
+    return 0;
 }
 int digit(int *result){
     if (next_token < (int)'0' || next_token > (int)'9')
