@@ -12,7 +12,7 @@ int lexeme();
 
 /* TOKEN CODES */
 #define PLUS 43
-#define ATERISK 42
+#define ASTERISK 42
 #define LEFT_PAREN 40
 #define RIGHT_PAREN 41
 
@@ -64,7 +64,7 @@ int term(int *result){
     if (lexeme() < 0){
         return -1;
     }
-    if (next_token != ATERISK){
+    if (next_token != ASTERISK){
         return 0;
     }
     if (lexeme() < 0){
