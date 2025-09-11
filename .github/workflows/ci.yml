@@ -18,5 +18,5 @@ jobs:
         id: build_step
         shell: bash
         run: |
-			gcc ./01-simple-rd-parser/rd-parser.c -o simple-rd-parser &&
-			gcc ./02-rd-parser/rd-parser.c -o rd-parser
+			    gcc ./01-simple-rd-parser/rd-parser.c -o simple-rd-parser
+			    gcc ./02-rd-parser/rd-parser.c -o rd-parser
