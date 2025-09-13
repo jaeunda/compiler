@@ -17,7 +17,7 @@ int lexeme();
 #define RIGHT_PAREN 41
 
 /* GLOBAL VAR */
-int next_token;
+char next_token[32];
 
 int main(void){
     /* INPUT */
@@ -103,8 +103,12 @@ int digit(int *result){
     return 0;
 }
 int lexeme(){
-    if ((next_token = getchar()) == EOF){
-        return -1;
+    char temp[32] = {0};
+    int i = 0;
+    int ch;
+    while ((ch = getchar()) != ' '){
+        temp[i++] = (char)ch;
     }
+    strncpy(next_token, temp, sizeof(next_token));
     return 0;
 }
