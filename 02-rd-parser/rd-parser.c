@@ -186,27 +186,41 @@ int term(struct Token *result){
                 result->num.f_num = res * opr; 
                 result->type = FLT;
                 if (result->type != rhs.type){ // operand의 type이 다를 경우
-                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '*'\n");
+                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '*'.\n");
                 }
             }
         } else if (op == DIV){ // type of result: INT
-            if (result->type == INT && rhs.type == INT)
+            if (result->type == INT && rhs.type == INT){
+                if (rhs.num.i_num == 0){
+                    fprintf(stderr, "Error: Division by zero.\n");
+                    return -1;
+                }
                 result->num.i_num /= rhs.num.i_num;
+            }
             else { // type of result: FLT
                 double res, opr;
                 res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
                 opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
+                if (opr == (double)0){
+                    fprintf(stderr, "Error: Division by zero.\n");
+                    return -1;
+                }
                 result->num.f_num = res / opr; 
                 result->type = FLT;
                 if (result->type != rhs.type){
-                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '/'\n");
+                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '/'.\n");
                 }
             }
         } else if (op == MOD){ // type of result: INT
-            if (result->type == INT && rhs.type == INT)
+            if (result->type == INT && rhs.type == INT){
+                if (rhs.num.i_num == 0){
+                    fprintf(stderr, "Error: Division by zero.\n");
+                    return -1;
+                }
                 result->num.i_num %= rhs.num.i_num;
+            }
             else { // operands 중 하나라도 INT가 아닌 경우 error
-                fprintf(stderr, "Error: Invalid operands to binary %% (have '%s' and '%s')\n",
+                fprintf(stderr, "Error: Invalid operands to binary %% (have '%s' and '%s').\n",
                     result->type == INT ? "int" : "float",
                     rhs.type == INT ? "int" : "float");
                 return -1;
