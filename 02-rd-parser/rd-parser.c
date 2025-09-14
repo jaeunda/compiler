@@ -150,7 +150,7 @@ int term(struct Token *result){
     if (lexeme() < 0){
         return -1;
     }
-    while (next_token.type == STAR || next_token.type == DIV || next_token.type == MOD){
+    while (next_token.type == STR || next_token.type == DIV || next_token.type == MOD){
         enum tokenType op = next_token.type;
         if (lexeme() < 0){
             return -1;
@@ -193,6 +193,9 @@ int term(struct Token *result){
                 return -1;
             }
         } else return -1;
+        if (lexeme() < 0){
+            return -1;
+        }
     }
     return 0;
 }
@@ -216,7 +219,7 @@ int factor(struct Token *result){
         result->num.i_num = next_token.num.i_num;
     } else if (next_token.type == FLT){
         result->type = FLT;
-        result->num.i_num = next_token.num.f_num;
+        result->num.f_num = next_token.num.f_num;
     } else return -1;
 
     return 0;
