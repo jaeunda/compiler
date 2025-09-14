@@ -65,7 +65,12 @@ int main(void){
 #endif
 
     /* INPUT */
-    int result;
+
+    // initialize result
+    struct Token result;
+    result.type = INT;
+    result.num.i_num = 0;
+
     if (lexeme() < 0){
         fprintf(stderr, "Syntax Error\n");
         exit(1);
@@ -79,10 +84,15 @@ int main(void){
         exit(1);
     }
     /* OUTPUT */
-    printf("%d\n", result);
-    exit(0);
+    if (result.type == INT){
+        printf("%d\n", result.num.i_num);
+    } else if (result.type == FLT){
+        printf("%f\n", result.num.f_num);
+    } else {
+        fprintf(stderr, "Syntax Error\n");
+    }
 }
-int expression(int *result){
+int expression(struct Token *result){
     /*
         E -> TE'
         E'-> +TE' | -TE' | empty
@@ -96,21 +106,40 @@ int expression(int *result){
         if (lexeme() < 0){
             return -1;
         }
-        int rhs;
+        struct Token rhs;
+        rhs.type = INT;
+        rhs.num.i_num = 0;
+
         if (term(&rhs) < 0){
             return -1;
         }
         
         // operation
         if (op == PLS){
-            *result += rhs;
+            if (result->type == INT && rhs.type == INT)
+                result->num.i_num += rhs.num.i_num;
+            else {
+                double res, opr;
+                res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
+                opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
+                result->num.f_num = res + opr; 
+                result->type = FLT;
+            }
         } else if (op == MIN){
-            *result -= rhs;
+            if (result->type == INT && rhs.type == INT)
+                result->num.i_num -= rhs.num.i_num;
+            else {
+                double res, opr;
+                res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
+                opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
+                result->num.f_num = res - opr; 
+                result->type = FLT;
+            }
         } else return -1;
     }
     return 0;
 }
-int term(int *result){
+int term(struct Token *result){
     /*
         T -> FT'
         T'-> * FT' | / FT' | % FT' | empty
@@ -128,21 +157,47 @@ int term(int *result){
             return -1;
         }
 
-        int rhs;
+        struct Token rhs;
+        rhs.type = INT;
+        rhs.num.i_num = 0;
+
         if (factor(&rhs) < 0){
             return -1;
         }
         if (op == STR){
-            *result *= rhs;
+            if (result->type == INT && rhs.type == INT)
+                result->num.i_num *= rhs.num.i_num;
+            else {
+                double res, opr;
+                res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
+                opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
+                result->num.f_num = res * opr; 
+                result->type = FLT;
+            }
         } else if (op == DIV){
-            *result /= rhs;
+            if (result->type == INT && rhs.type == INT)
+                result->num.i_num /= rhs.num.i_num;
+            else {
+                double res, opr;
+                res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
+                opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
+                result->num.f_num = res / opr; 
+                result->type = FLT;
+            }
         } else if (op == MOD){
-            *result %= rhs;
+            if (result->type == INT && rhs.type == INT)
+                result->num.i_num %= rhs.num.i_num;
+            else {
+                fprintf("Error: Invalid operands to binary % (have '%s' and '%s')\n",
+                    result->type == INT ? "int" : "float",
+                    rhs.type == INT ? "int" : "float");
+                return -1;
+            }
         } else return -1;
     }
     return 0;
 }
-int factor(int *result){
+int factor(struct Token *result){
     /* F -> number | ( E ) */
     if (next_token.type == LP){
         if (lexeme() < 0){
@@ -158,17 +213,13 @@ int factor(int *result){
     }
 
     if (next_token.type == INT){
-        result = next_token.num.i_num;
+        result->type = INT;
+        result->num.i_num = next_token.num.i_num;
     } else if (next_token.type == FLT){
-        result = next_token.num.f_num;
+        result->type = FLT;
+        result->num.i_num = next_token.num.f_num;
     } else return -1;
 
-    return 0;
-}
-int digit(int *result){
-    if (next_token < (int)'0' || next_token > (int)'9')
-        return -1;
-    *result = next_token - (int)'0';
     return 0;
 }
 int lexeme(){
