@@ -3,11 +3,17 @@
 #include <string.h>
 #include <unistd.h>
 
+/* GLOBAL */
+enum tokenType{INT, FLT, PLS, MIN, STR, DIV, MOD, LP, RP, END};
+struct Token{
+    enum tokenType type;
+    union { int i_num; double f_num; } num;
+} next_token; 
+
 /* FUNCTIONS */
 int expression(struct Token *result);
 int term(struct Token *result);
 int factor(struct Token *result);
-int digit(struct Token *result);
 int lexeme();
 
 /* TOKEN CODES */
@@ -18,13 +24,6 @@ int lexeme();
 #define MODULAR 37
 #define LEFT_PAREN 40
 #define RIGHT_PAREN 41
-
-/* GLOBAL */
-enum tokenType{INT, FLT, PLS, MIN, STR, DIV, MOD, LP, RP, END};
-struct Token{
-    enum tokenType type;
-    union { int i_num; double f_num; } num;
-} next_token; 
 
 int main(void){
 #ifdef D_TEST
@@ -188,7 +187,7 @@ int term(struct Token *result){
             if (result->type == INT && rhs.type == INT)
                 result->num.i_num %= rhs.num.i_num;
             else {
-                fprintf("Error: Invalid operands to binary % (have '%s' and '%s')\n",
+                fprintf(stderr, "Error: Invalid operands to binary %% (have '%s' and '%s')\n",
                     result->type == INT ? "int" : "float",
                     rhs.type == INT ? "int" : "float");
                 return -1;
