@@ -83,21 +83,31 @@ int main(void){
     exit(0);
 }
 int expression(int *result){
-    /* E -> T + E | T */
+    /*
+        E -> TE'
+        E'-> +TE' | -TE' | empty
+    */
+    /* E -> T { (+|-) T } */
     if (term(result) < 0){
         return -1;
     }
-    if (next_token != PLUS){
-        return 0;
+    while (next_token.type == PLS || next_token.type == MIN){
+        enum tokenType op = next_token.type;
+        if (lexeme() < 0){
+            return -1;
+        }
+        int rhs;
+        if (term(&rhs) < 0){
+            return -1;
+        }
+        
+        // operation
+        if (op == PLS){
+            *result += rhs;
+        } else if (op == MIN){
+            *result -= rhs;
+        } else return -1;
     }
-    if (lexeme() < 0){
-        return -1;
-    }
-    int rhs;
-    if (expression(&rhs) < 0){
-        return -1;
-    }
-    *result += rhs;
     return 0;
 }
 int term(int *result){
