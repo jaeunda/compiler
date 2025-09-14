@@ -64,88 +64,88 @@ int main(void){
     exit(0);
 #endif
 
-    // /* INPUT */
-    // int result;
-    // if (lexeme() < 0){
-    //     fprintf(stderr, "Syntax Error\n");
-    //     exit(1);
-    // }    
-    // if (expression(&result) < 0){
-    //     fprintf(stderr, "Syntax Error\n");
-    //     exit(1);
-    // }
-    // if (next_token != (int)'\n'){
-    //     fprintf(stderr, "Syntax Error\n");
-    //     exit(1);
-    // }
-    // /* OUTPUT */
-    // printf("%d\n", result);
-    // exit(0);
+    /* INPUT */
+    int result;
+    if (lexeme() < 0){
+        fprintf(stderr, "Syntax Error\n");
+        exit(1);
+    }    
+    if (expression(&result) < 0){
+        fprintf(stderr, "Syntax Error\n");
+        exit(1);
+    }
+    if (next_token.type != END){
+        fprintf(stderr, "Syntax Error\n");
+        exit(1);
+    }
+    /* OUTPUT */
+    printf("%d\n", result);
+    exit(0);
 }
-// int expression(int *result){
-//     /* E -> T + E | T */
-//     if (term(result) < 0){
-//         return -1;
-//     }
-//     if (next_token != PLUS){
-//         return 0;
-//     }
-//     if (lexeme() < 0){
-//         return -1;
-//     }
-//     int rhs;
-//     if (expression(&rhs) < 0){
-//         return -1;
-//     }
-//     *result += rhs;
-//     return 0;
-// }
-// int term(int *result){
-//     /* T -> F * T | F */
-//     if (factor(result) < 0){
-//         return -1;
-//     }
-//     if (lexeme() < 0){
-//         return -1;
-//     }
-//     if (next_token != ASTERISK){
-//         return 0;
-//     }
-//     if (lexeme() < 0){
-//         return -1;
-//     }
-//     int rhs;
-//     if (term(&rhs) < 0){
-//         return -1;
-//     }
-//     *result *= rhs;
-//     return 0;
-// }
-// int factor(int *result){
-//     /* F -> digit | '(' E ')' */
-//     if (next_token == LEFT_PAREN){
-//         if (lexeme() < 0){
-//             return -1;
-//         }
-//         if (expression(result) < 0){
-//             return -1;
-//         }
-//         if (next_token != RIGHT_PAREN){
-//             return -1;
-//         }
-//         return 0;
-//     }
-//     if (digit(result) < 0){
-//         return -1;
-//     }
-//     return 0;
-// }
-// int digit(int *result){
-//     if (next_token < (int)'0' || next_token > (int)'9')
-//         return -1;
-//     *result = next_token - (int)'0';
-//     return 0;
-// }
+int expression(int *result){
+    /* E -> T + E | T */
+    if (term(result) < 0){
+        return -1;
+    }
+    if (next_token != PLUS){
+        return 0;
+    }
+    if (lexeme() < 0){
+        return -1;
+    }
+    int rhs;
+    if (expression(&rhs) < 0){
+        return -1;
+    }
+    *result += rhs;
+    return 0;
+}
+int term(int *result){
+    /* T -> F * T | F */
+    if (factor(result) < 0){
+        return -1;
+    }
+    if (lexeme() < 0){
+        return -1;
+    }
+    if (next_token != ASTERISK){
+        return 0;
+    }
+    if (lexeme() < 0){
+        return -1;
+    }
+    int rhs;
+    if (term(&rhs) < 0){
+        return -1;
+    }
+    *result *= rhs;
+    return 0;
+}
+int factor(int *result){
+    /* F -> digit | '(' E ')' */
+    if (next_token == LEFT_PAREN){
+        if (lexeme() < 0){
+            return -1;
+        }
+        if (expression(result) < 0){
+            return -1;
+        }
+        if (next_token != RIGHT_PAREN){
+            return -1;
+        }
+        return 0;
+    }
+    if (digit(result) < 0){
+        return -1;
+    }
+    return 0;
+}
+int digit(int *result){
+    if (next_token < (int)'0' || next_token > (int)'9')
+        return -1;
+    *result = next_token - (int)'0';
+    return 0;
+}
 int lexeme(){
     char temp[32] = {0};
     int i = 0;
