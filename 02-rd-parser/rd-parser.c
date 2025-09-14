@@ -151,8 +151,10 @@ int lexeme(){
     int i = 0;
     int ch;
 
+    // ignore the blank
     while ((ch = getchar()) == ' ');
 
+    // get operation token (len: 1)
     if (ch == PLUS){
         next_token.type = PLS;
         return 0;
@@ -177,32 +179,38 @@ int lexeme(){
     } else if (ch == (int)'\n'){
         next_token.type = END;
         return 0;
-    } else if (ch >= (int)'0' && ch <= (int)'9'){
+    } else if (ch >= (int)'0' && ch <= (int)'9'){ // number: int or float
+        // number -> INT     | FLT
+        // number -> {digit} | {digit} '.' {digit}
         next_token.type = INT;
         temp[i++] = (char)ch;
 
+        // {digit}
         while ((ch = getchar()) >= (int)'0' && ch <= (int)'9'){
             temp[i++] = (char)ch;
         }
+        // decimal point
         if (ch == (int)'.'){
             next_token.type = FLT;
             temp[i++] = (char)ch;
-        } else {
+        } else { // if not, return integer
             ungetc(ch, stdin);
             // INT
             next_token.num.i_num = atoi(temp);
             return 0;
         }
 
+        // FLT
+        // decimal places
         while ((ch = getchar()) >= (int)'0' && ch <= (int)'9'){
             temp[i++] = (char)ch;
         }
         ungetc(ch, stdin);
-        //FLT
+        // return float
         next_token.num.f_num = atof(temp);
         return 0;
 
-    } else {
+    } else {  // Syntax Error
         return -1;
     }
     return -1;
