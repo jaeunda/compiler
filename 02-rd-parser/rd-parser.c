@@ -27,45 +27,7 @@ int lexeme();
 #define RIGHT_PAREN 41
 
 int main(void){
-#ifdef D_TEST
-    while (lexeme() == 0){
-        if (next_token.type == END) exit(0);
-        switch (next_token.type){
-            case INT:
-                printf("%d\n", next_token.num.i_num);
-                break;
-            case FLT:
-                printf("%f\n", next_token.num.f_num);
-                break;
-            case PLS:
-                printf("+\n");
-                break;
-            case MIN:
-                printf("-\n");
-                break;
-            case STR:
-                printf("*\n");
-                break;
-            case DIV:
-                printf("/\n");
-                break;
-            case MOD:
-                printf("mod\n");
-                break;
-            case LP:
-                printf("(\n");
-                break;
-            case RP:
-                printf(")\n");
-                break;
-        }
-    }
-    printf("Syntax Error\n");
-    exit(0);
-#endif
-
     /* INPUT */
-
     // initialize result
     struct Token result;
     result.type = INT;
