@@ -143,22 +143,26 @@ int term(int *result){
     return 0;
 }
 int factor(int *result){
-    /* F -> digit | '(' E ')' */
-    if (next_token == LEFT_PAREN){
+    /* F -> number | ( E ) */
+    if (next_token.type == LP){
         if (lexeme() < 0){
             return -1;
         }
         if (expression(result) < 0){
             return -1;
         }
-        if (next_token != RIGHT_PAREN){
+        if (next_token.type != RP){
             return -1;
         }
         return 0;
     }
-    if (digit(result) < 0){
-        return -1;
-    }
+
+    if (next_token.type == INT){
+        result = next_token.num.i_num;
+    } else if (next_token.type == FLT){
+        result = next_token.num.f_num;
+    } else return -1;
+
     return 0;
 }
 int digit(int *result){
