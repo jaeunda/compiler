@@ -4,10 +4,10 @@
 #include <unistd.h>
 
 /* FUNCTIONS */
-int expression(int *result);
-int term(int *result);
-int factor(int *result);
-int digit(int *result);
+int expression(struct Token *result);
+int term(struct Token *result);
+int factor(struct Token *result);
+int digit(struct Token *result);
 int lexeme();
 
 /* TOKEN CODES */
