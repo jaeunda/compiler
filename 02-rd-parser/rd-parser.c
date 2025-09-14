@@ -11,6 +11,7 @@ struct Token{
 } next_token; 
 
 /* FUNCTIONS */
+// return 0 on success, -1 on error
 int expression(struct Token *result);
 int term(struct Token *result);
 int factor(struct Token *result);
@@ -78,6 +79,7 @@ int main(void){
         fprintf(stderr, "Syntax Error\n");
         exit(1);
     }
+    // token이 남아있으면 error
     if (next_token.type != END){
         fprintf(stderr, "Syntax Error\n");
         exit(1);
@@ -100,7 +102,9 @@ int expression(struct Token *result){
     if (term(result) < 0){
         return -1;
     }
+    // iteration: left associative
     while (next_token.type == PLS || next_token.type == MIN){
+        // store the operator
         enum tokenType op = next_token.type;
         if (lexeme() < 0){
             return -1;
@@ -114,29 +118,29 @@ int expression(struct Token *result){
         }
         
         // operation
-        if (op == PLS){
+        if (op == PLS){ // type of result: INT
             if (result->type == INT && rhs.type == INT)
                 result->num.i_num += rhs.num.i_num;
-            else {
+            else { // type of result: FLT
                 double res, opr;
                 res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
                 opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
                 result->num.f_num = res + opr; 
                 result->type = FLT;
-                if (result->type != rhs.type){
+                if (result->type != rhs.type){ // operand의 type이 다를 경우
                     fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '+'\n");
                 }
             }
-        } else if (op == MIN){
+        } else if (op == MIN){ // type of result: INT
             if (result->type == INT && rhs.type == INT)
                 result->num.i_num -= rhs.num.i_num;
-            else {
+            else { // type of result: FLT
                 double res, opr;
                 res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
                 opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
                 result->num.f_num = res - opr; 
                 result->type = FLT;
-                if (result->type != rhs.type){
+                if (result->type != rhs.type){ // operand의 type이 다를 경우
                     fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '-'\n");
                 }
             }
@@ -156,7 +160,9 @@ int term(struct Token *result){
     if (lexeme() < 0){
         return -1;
     }
+    // iteration: left associative
     while (next_token.type == STR || next_token.type == DIV || next_token.type == MOD){
+        // store the oprator
         enum tokenType op = next_token.type;
         if (lexeme() < 0){
             return -1;
@@ -169,23 +175,24 @@ int term(struct Token *result){
         if (factor(&rhs) < 0){
             return -1;
         }
-        if (op == STR){
+        // operation
+        if (op == STR){ // type of result: INT
             if (result->type == INT && rhs.type == INT)
                 result->num.i_num *= rhs.num.i_num;
-            else {
+            else { // type of result: FLT
                 double res, opr;
                 res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
                 opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
                 result->num.f_num = res * opr; 
                 result->type = FLT;
-                if (result->type != rhs.type){
+                if (result->type != rhs.type){ // operand의 type이 다를 경우
                     fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '*'\n");
                 }
             }
-        } else if (op == DIV){
+        } else if (op == DIV){ // type of result: INT
             if (result->type == INT && rhs.type == INT)
                 result->num.i_num /= rhs.num.i_num;
-            else {
+            else { // type of result: FLT
                 double res, opr;
                 res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
                 opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
@@ -195,16 +202,17 @@ int term(struct Token *result){
                     fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '/'\n");
                 }
             }
-        } else if (op == MOD){
+        } else if (op == MOD){ // type of result: INT
             if (result->type == INT && rhs.type == INT)
                 result->num.i_num %= rhs.num.i_num;
-            else {
+            else { // operands 중 하나라도 INT가 아닌 경우 error
                 fprintf(stderr, "Error: Invalid operands to binary %% (have '%s' and '%s')\n",
                     result->type == INT ? "int" : "float",
                     rhs.type == INT ? "int" : "float");
                 return -1;
             }
         } else return -1;
+        // get the next token
         if (lexeme() < 0){
             return -1;
         }
@@ -225,7 +233,7 @@ int factor(struct Token *result){
         }
         return 0;
     }
-
+    // type of number
     if (next_token.type == INT){
         result->type = INT;
         result->num.i_num = next_token.num.i_num;
