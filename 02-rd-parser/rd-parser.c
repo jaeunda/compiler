@@ -191,9 +191,9 @@ int term(struct Token *result){
             }
         } else if (op == DIV){ // type of result: INT
             if (result->type == INT && rhs.type == INT){
-                if (rhs.num.i_num == 0){
+                if (rhs.num.i_num == 0){ // runtime error: exit
                     fprintf(stderr, "Error: Division by zero.\n");
-                    return -1;
+                    exit(EXIT_FAILURE); 
                 }
                 result->num.i_num /= rhs.num.i_num;
             }
@@ -201,9 +201,9 @@ int term(struct Token *result){
                 double res, opr;
                 res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
                 opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
-                if (opr == (double)0){
+                if (opr == (double)0){ // runtime error
                     fprintf(stderr, "Error: Division by zero.\n");
-                    return -1;
+                    exit(EXIT_FAILURE);
                 }
                 result->num.f_num = res / opr; 
                 result->type = FLT;
@@ -213,13 +213,13 @@ int term(struct Token *result){
             }
         } else if (op == MOD){ // type of result: INT
             if (result->type == INT && rhs.type == INT){
-                if (rhs.num.i_num == 0){
+                if (rhs.num.i_num == 0){ // runtime error
                     fprintf(stderr, "Error: Division by zero.\n");
-                    return -1;
+                    exit(EXIT_FAILURE);
                 }
                 result->num.i_num %= rhs.num.i_num;
             }
-            else { // operands 중 하나라도 INT가 아닌 경우 error
+            else { // operands 중 하나라도 INT가 아닌 경우 error - syntax error
                 fprintf(stderr, "Error: Invalid operands to binary %% (have '%s' and '%s').\n",
                     result->type == INT ? "int" : "float",
                     rhs.type == INT ? "int" : "float");
