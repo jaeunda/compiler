@@ -111,24 +111,35 @@ int expression(int *result){
     return 0;
 }
 int term(int *result){
-    /* T -> F * T | F */
+    /*
+        T -> FT'
+        T'-> * FT' | / FT' | % FT' | empty
+    */
+    /* T -> F {( * | / | % ) F } */
     if (factor(result) < 0){
         return -1;
     }
     if (lexeme() < 0){
         return -1;
     }
-    if (next_token != ASTERISK){
-        return 0;
+    while (next_token.type == STAR || next_token.type == DIV || next_token.type == MOD){
+        enum tokenType op = next_token.type;
+        if (lexeme() < 0){
+            return -1;
+        }
+
+        int rhs;
+        if (factor(&rhs) < 0){
+            return -1;
+        }
+        if (op == STR){
+            *result *= rhs;
+        } else if (op == DIV){
+            *result /= rhs;
+        } else if (op == MOD){
+            *result %= rhs;
+        } else return -1;
     }
-    if (lexeme() < 0){
-        return -1;
-    }
-    int rhs;
-    if (term(&rhs) < 0){
-        return -1;
-    }
-    *result *= rhs;
     return 0;
 }
 int factor(int *result){
