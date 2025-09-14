@@ -90,7 +90,7 @@ int expression(struct Token *result){
                 result->num.f_num = res + opr; 
                 result->type = FLT;
                 if (result->type != rhs.type){ // operand의 type이 다를 경우
-                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '+'\n");
+                    fprintf(stdout, "Warning: Implicit conversion from 'int' to 'float' in binary operation '+'\n");
                 }
             }
         } else if (op == MIN){ // type of result: INT
@@ -103,7 +103,7 @@ int expression(struct Token *result){
                 result->num.f_num = res - opr; 
                 result->type = FLT;
                 if (result->type != rhs.type){ // operand의 type이 다를 경우
-                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '-'\n");
+                    fprintf(stdout, "Warning: Implicit conversion from 'int' to 'float' in binary operation '-'\n");
                 }
             }
         } else return -1;
@@ -148,7 +148,7 @@ int term(struct Token *result){
                 result->num.f_num = res * opr; 
                 result->type = FLT;
                 if (result->type != rhs.type){ // operand의 type이 다를 경우
-                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '*'.\n");
+                    fprintf(stdout, "Warning: Implicit conversion from 'int' to 'float' in binary operation '*'.\n");
                 }
             }
         } else if (op == DIV){ // type of result: INT
@@ -170,7 +170,7 @@ int term(struct Token *result){
                 result->num.f_num = res / opr; 
                 result->type = FLT;
                 if (result->type != rhs.type){
-                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '/'.\n");
+                    fprintf(stdout, "Warning: Implicit conversion from 'int' to 'float' in binary operation '/'.\n");
                 }
             }
         } else if (op == MOD){ // type of result: INT
