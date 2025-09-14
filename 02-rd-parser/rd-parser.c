@@ -123,6 +123,9 @@ int expression(struct Token *result){
                 opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
                 result->num.f_num = res + opr; 
                 result->type = FLT;
+                if (result->type != rhs.type){
+                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '+'\n");
+                }
             }
         } else if (op == MIN){
             if (result->type == INT && rhs.type == INT)
@@ -133,6 +136,9 @@ int expression(struct Token *result){
                 opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
                 result->num.f_num = res - opr; 
                 result->type = FLT;
+                if (result->type != rhs.type){
+                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '-'\n");
+                }
             }
         } else return -1;
     }
@@ -172,6 +178,9 @@ int term(struct Token *result){
                 opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
                 result->num.f_num = res * opr; 
                 result->type = FLT;
+                if (result->type != rhs.type){
+                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '*'\n");
+                }
             }
         } else if (op == DIV){
             if (result->type == INT && rhs.type == INT)
@@ -182,6 +191,9 @@ int term(struct Token *result){
                 opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
                 result->num.f_num = res / opr; 
                 result->type = FLT;
+                if (result->type != rhs.type){
+                    fprintf(stdout, "Warning: Implicit conversion from 'float' to 'int' in binary operation '/'\n");
+                }
             }
         } else if (op == MOD){
             if (result->type == INT && rhs.type == INT)
