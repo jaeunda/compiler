@@ -3,11 +3,18 @@
 #include <string.h>
 #include <unistd.h>
 
+/* GLOBAL */
+enum tokenType{INT, FLT, PLS, MIN, STR, DIV, MOD, LP, RP, END};
+struct Token{
+    enum tokenType type;
+    union { int i_num; double f_num; } num;
+} next_token; 
+
 /* FUNCTIONS */
-int expression(int *result);
-int term(int *result);
-int factor(int *result);
-int digit(int *result);
+// return 0 on success, -1 on error
+int expression(struct Token *result);
+int term(struct Token *result);
+int factor(struct Token *result);
 int lexeme();
 
 /* TOKEN CODES */
@@ -19,133 +26,200 @@ int lexeme();
 #define LEFT_PAREN 40
 #define RIGHT_PAREN 41
 
-/* GLOBAL */
-enum tokenType{INT, FLT, PLS, MIN, STR, DIV, MOD, LP, RP, END};
-struct Token{
-    enum tokenType type;
-    union { int i_num; double f_num; } num;
-} next_token; 
-
 int main(void){
-#ifdef D_TEST
-    while (lexeme() == 0){
-        if (next_token.type == END) exit(0);
-        switch (next_token.type){
-            case INT:
-                printf("%d\n", next_token.num.i_num);
-                break;
-            case FLT:
-                printf("%f\n", next_token.num.f_num);
-                break;
-            case PLS:
-                printf("+\n");
-                break;
-            case MIN:
-                printf("-\n");
-                break;
-            case STR:
-                printf("*\n");
-                break;
-            case DIV:
-                printf("/\n");
-                break;
-            case MOD:
-                printf("mod\n");
-                break;
-            case LP:
-                printf("(\n");
-                break;
-            case RP:
-                printf(")\n");
-                break;
+    /* INPUT */
+    // initialize result
+    struct Token result;
+    result.type = INT;
+    result.num.i_num = 0;
+
+    if (lexeme() < 0){
+        fprintf(stderr, "Syntax Error\n");
+        exit(1);
+    }    
+    if (expression(&result) < 0){
+        fprintf(stderr, "Syntax Error\n");
+        exit(1);
+    }
+    // token이 남아있으면 error
+    if (next_token.type != END){
+        fprintf(stderr, "Syntax Error\n");
+        exit(1);
+    }
+    /* OUTPUT */
+    if (result.type == INT){
+        printf("%d\n", result.num.i_num);
+    } else if (result.type == FLT){
+        printf("%f\n", result.num.f_num);
+    } else {
+        fprintf(stderr, "Syntax Error\n");
+    }
+}
+int expression(struct Token *result){
+    /*
+        E -> TE'
+        E'-> +TE' | -TE' | empty
+    */
+    /* E -> T { (+|-) T } */
+    if (term(result) < 0){
+        return -1;
+    }
+    // iteration: left associative
+    while (next_token.type == PLS || next_token.type == MIN){
+        // store the operator
+        enum tokenType op = next_token.type;
+        if (lexeme() < 0){
+            return -1;
+        }
+        struct Token rhs;
+        rhs.type = INT;
+        rhs.num.i_num = 0;
+
+        if (term(&rhs) < 0){
+            return -1;
+        }
+        
+        // operation
+        if (op == PLS){ // type of result: INT
+            if (result->type == INT && rhs.type == INT)
+                result->num.i_num += rhs.num.i_num;
+            else { // type of result: FLT
+                double res, opr;
+                res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
+                opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
+                result->num.f_num = res + opr; 
+                result->type = FLT;
+                if (result->type != rhs.type){ // operand의 type이 다를 경우
+                    fprintf(stdout, "Warning: Implicit conversion from 'int' to 'float' in binary operation '+'\n");
+                }
+            }
+        } else if (op == MIN){ // type of result: INT
+            if (result->type == INT && rhs.type == INT)
+                result->num.i_num -= rhs.num.i_num;
+            else { // type of result: FLT
+                double res, opr;
+                res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
+                opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
+                result->num.f_num = res - opr; 
+                result->type = FLT;
+                if (result->type != rhs.type){ // operand의 type이 다를 경우
+                    fprintf(stdout, "Warning: Implicit conversion from 'int' to 'float' in binary operation '-'\n");
+                }
+            }
+        } else return -1;
+    }
+    return 0;
+}
+int term(struct Token *result){
+    /*
+        T -> FT'
+        T'-> * FT' | / FT' | % FT' | empty
+    */
+    /* T -> F {( * | / | % ) F } */
+    if (factor(result) < 0){
+        return -1;
+    }
+    if (lexeme() < 0){
+        return -1;
+    }
+    // iteration: left associative
+    while (next_token.type == STR || next_token.type == DIV || next_token.type == MOD){
+        // store the oprator
+        enum tokenType op = next_token.type;
+        if (lexeme() < 0){
+            return -1;
+        }
+
+        struct Token rhs;
+        rhs.type = INT;
+        rhs.num.i_num = 0;
+
+        if (factor(&rhs) < 0){
+            return -1;
+        }
+        // operation
+        if (op == STR){ // type of result: INT
+            if (result->type == INT && rhs.type == INT)
+                result->num.i_num *= rhs.num.i_num;
+            else { // type of result: FLT
+                double res, opr;
+                res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
+                opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
+                result->num.f_num = res * opr; 
+                result->type = FLT;
+                if (result->type != rhs.type){ // operand의 type이 다를 경우
+                    fprintf(stdout, "Warning: Implicit conversion from 'int' to 'float' in binary operation '*'.\n");
+                }
+            }
+        } else if (op == DIV){ // type of result: INT
+            if (result->type == INT && rhs.type == INT){
+                if (rhs.num.i_num == 0){ // runtime error: exit
+                    fprintf(stderr, "Error: Division by zero.\n");
+                    exit(EXIT_FAILURE); 
+                }
+                result->num.i_num /= rhs.num.i_num;
+            }
+            else { // type of result: FLT
+                double res, opr;
+                res = result->type == INT ? (double)result->num.i_num : result->num.f_num;
+                opr = rhs.type == INT ? (double)rhs.num.i_num : rhs.num.f_num;
+                if (opr == (double)0){ // runtime error
+                    fprintf(stderr, "Error: Division by zero.\n");
+                    exit(EXIT_FAILURE);
+                }
+                result->num.f_num = res / opr; 
+                result->type = FLT;
+                if (result->type != rhs.type){
+                    fprintf(stdout, "Warning: Implicit conversion from 'int' to 'float' in binary operation '/'.\n");
+                }
+            }
+        } else if (op == MOD){ // type of result: INT
+            if (result->type == INT && rhs.type == INT){
+                if (rhs.num.i_num == 0){ // runtime error
+                    fprintf(stderr, "Error: Division by zero.\n");
+                    exit(EXIT_FAILURE);
+                }
+                result->num.i_num %= rhs.num.i_num;
+            }
+            else { // operands 중 하나라도 INT가 아닌 경우 error - syntax error
+                fprintf(stderr, "Error: Invalid operands to binary %% (have '%s' and '%s').\n",
+                    result->type == INT ? "int" : "float",
+                    rhs.type == INT ? "int" : "float");
+                return -1;
+            }
+        } else return -1;
+        // get the next token
+        if (lexeme() < 0){
+            return -1;
         }
     }
-    printf("Syntax Error\n");
-    exit(0);
-#endif
-
-    // /* INPUT */
-    // int result;
-    // if (lexeme() < 0){
-    //     fprintf(stderr, "Syntax Error\n");
-    //     exit(1);
-    // }    
-    // if (expression(&result) < 0){
-    //     fprintf(stderr, "Syntax Error\n");
-    //     exit(1);
-    // }
-    // if (next_token != (int)'\n'){
-    //     fprintf(stderr, "Syntax Error\n");
-    //     exit(1);
-    // }
-    // /* OUTPUT */
-    // printf("%d\n", result);
-    // exit(0);
+    return 0;
 }
-// int expression(int *result){
-//     /* E -> T + E | T */
-//     if (term(result) < 0){
-//         return -1;
-//     }
-//     if (next_token != PLUS){
-//         return 0;
-//     }
-//     if (lexeme() < 0){
-//         return -1;
-//     }
-//     int rhs;
-//     if (expression(&rhs) < 0){
-//         return -1;
-//     }
-//     *result += rhs;
-//     return 0;
-// }
-// int term(int *result){
-//     /* T -> F * T | F */
-//     if (factor(result) < 0){
-//         return -1;
-//     }
-//     if (lexeme() < 0){
-//         return -1;
-//     }
-//     if (next_token != ASTERISK){
-//         return 0;
-//     }
-//     if (lexeme() < 0){
-//         return -1;
-//     }
-//     int rhs;
-//     if (term(&rhs) < 0){
-//         return -1;
-//     }
-//     *result *= rhs;
-//     return 0;
-// }
-// int factor(int *result){
-//     /* F -> digit | '(' E ')' */
-//     if (next_token == LEFT_PAREN){
-//         if (lexeme() < 0){
-//             return -1;
-//         }
-//         if (expression(result) < 0){
-//             return -1;
-//         }
-//         if (next_token != RIGHT_PAREN){
-//             return -1;
-//         }
-//         return 0;
-//     }
-//     if (digit(result) < 0){
-//         return -1;
-//     }
-//     return 0;
-// }
-// int digit(int *result){
-//     if (next_token < (int)'0' || next_token > (int)'9')
-//         return -1;
-//     *result = next_token - (int)'0';
-//     return 0;
-// }
+int factor(struct Token *result){
+    /* F -> number | ( E ) */
+    if (next_token.type == LP){
+        if (lexeme() < 0){
+            return -1;
+        }
+        if (expression(result) < 0){
+            return -1;
+        }
+        if (next_token.type != RP){
+            return -1;
+        }
+        return 0;
+    }
+    // type of number
+    if (next_token.type == INT){
+        result->type = INT;
+        result->num.i_num = next_token.num.i_num;
+    } else if (next_token.type == FLT){
+        result->type = FLT;
+        result->num.f_num = next_token.num.f_num;
+    } else return -1;
+
+    return 0;
+}
 int lexeme(){
     char temp[32] = {0};
     int i = 0;
