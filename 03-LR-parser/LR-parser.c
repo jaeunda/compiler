@@ -111,8 +111,12 @@ int yylex(void){
     int i = 0;
     while (ch == ' ' || ch == '\t') ch = getchar();
     if (isdigit(ch)){
-        do ch = getchar();
-        while (isdigit(ch));
+        do {
+            yytext[i] = ch;
+            ch = getchar();
+        } while (isdigit(ch));
+        yytext[i] = 0;
+        yylval = atoi(yytext);
         return(NUMBER);
     } else if (ch == '+') {ch = getchar(); return(PLUS);}
     else if (ch == '*') {ch = getchar(); return(STAR);}
