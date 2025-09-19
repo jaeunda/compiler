@@ -79,7 +79,7 @@ void reduce(int i){
 int yylex(void){
     static char ch = ' ';
     int i = 0;
-    while (ch == ' ' || ch == '\t' || ch == '\n') ch = getchar();
+    while (ch == ' ' || ch == '\t') ch = getchar();
     if (isdigit(ch)){
         do ch = getchar();
         while (isdigit(ch));
@@ -88,6 +88,6 @@ int yylex(void){
     else if (ch == '*') {ch = getchar(); return(STAR);}
     else if (ch == '(') {ch = getchar(); return(LPAREN);}
     else if (ch == ')') {ch = getchar(); return(RPAREN);}
-    else if (ch == EOF) return(END);
+    else if (ch == '\n') return(END);
     else yyerror();
 }
