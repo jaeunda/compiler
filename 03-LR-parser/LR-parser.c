@@ -35,5 +35,30 @@ int stack[1000];
 int top = -1;
 int sym;
 
+/* FUNCTIONS */
+int yyparse(void);
+void push(int i);
+void shift(int i);
+void reduce(int i);
+void yyerror(void){
+    printf("Syntax Error\n");
+    exit(EXIT_FAILURE);
+}
+int yylex(void);
+
 int main(void){
+    yyparse();
+}
+int yyparse(void){
+    int i;
+    stack[++top] = 0;
+    sym = yylex();
+    do {
+        i = action[stack[top]][sym-256];
+        if (i == ACC)
+            printf("Success!\n");
+        else if (i > 0) shift(i);
+        else if (i < 0) reduce(-i);
+        else yyerror(); // i == 0
+    } while (i != ACC);
 }
