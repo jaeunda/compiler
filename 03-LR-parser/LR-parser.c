@@ -36,6 +36,11 @@ int stack[1000];
 int top = -1;
 int sym;
 
+/* EVALUATION */
+int value[1000];
+char yytext[32];
+int yylval;
+
 /* FUNCTIONS */
 int yyparse(void);
 void push(int i);
@@ -49,6 +54,7 @@ int yylex(void);
 
 int main(void){
     yyparse();
+    printf("Result: %d\n", value[1]);
 }
 int yyparse(void){
     int i;
@@ -68,6 +74,7 @@ void push(int i){
 }
 void shift(int i){
     push(i);
+    value[top] = yylval;
     sym = yylex();
 }
 void reduce(int i){
@@ -75,14 +82,42 @@ void reduce(int i){
     top -= prod_length[i];
     old_top = top;
     push(go_to[stack[old_top]][prod_left[i]]);
+
+    switch (i){
+        case 1:
+            value[top] = value[old_top+1] + value[old_top+3];
+            break;
+        case 2:
+            value[top] = value[old_top+1];
+            break;
+        case 3:
+            value[top] = value[old_top+1] * value[old_top+3];
+            break;
+        case 4:
+            value[top] = value[old_top+1];
+            break;
+        case 5:
+            value[top] = value[old_top+2];
+            break;
+        case 6:
+            value[top] = value[old_top+1];
+            break;
+        default:
+            yyerror();
+            break;
+    }
 }
 int yylex(void){
     static char ch = ' ';
     int i = 0;
     while (ch == ' ' || ch == '\t') ch = getchar();
     if (isdigit(ch)){
-        do ch = getchar();
-        while (isdigit(ch));
+        do {
+            yytext[i++] = ch;
+            ch = getchar();
+        } while (isdigit(ch));
+        yytext[i] = 0;
+        yylval = atoi(yytext);
         return(NUMBER);
     } else if (ch == '+') {ch = getchar(); return(PLUS);}
     else if (ch == '*') {ch = getchar(); return(STAR);}
