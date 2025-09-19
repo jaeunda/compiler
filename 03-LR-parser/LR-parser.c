@@ -62,3 +62,16 @@ int yyparse(void){
         else yyerror(); // i == 0
     } while (i != ACC);
 }
+void push(int i){
+    stack[++top] = i;
+}
+void shift(int i){
+    push(i);
+    sym = yylex();
+}
+void reduce(int i){
+    int old_top;
+    top -= prod_length[i];
+    old_top = top;
+    push(go_to[stack[old_top]][prod_left[i]]);
+}
