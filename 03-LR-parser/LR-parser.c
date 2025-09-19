@@ -54,6 +54,7 @@ int yylex(void);
 
 int main(void){
     yyparse();
+    printf("Result: %d\n", value[1]);
 }
 int yyparse(void){
     int i;
@@ -90,7 +91,7 @@ void reduce(int i){
             value[top] = value[old_top+1];
             break;
         case 3:
-            value[top] = value[old_top+1]*value[old_top+3];
+            value[top] = value[old_top+1] * value[old_top+3];
             break;
         case 4:
             value[top] = value[old_top+1];
@@ -112,7 +113,7 @@ int yylex(void){
     while (ch == ' ' || ch == '\t') ch = getchar();
     if (isdigit(ch)){
         do {
-            yytext[i] = ch;
+            yytext[i++] = ch;
             ch = getchar();
         } while (isdigit(ch));
         yytext[i] = 0;
