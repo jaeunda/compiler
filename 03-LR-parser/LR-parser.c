@@ -55,36 +55,39 @@ int yylex(void);
 int main(void){
     yyparse();
     printf("Result: %d\n", value[1]);
+    // value[] : {0, result}
 }
 int yyparse(void){
     int i;
-    stack[++top] = 0;
-    sym = yylex();
+    stack[++top] = 0; // initial state
+    sym = yylex(); // get token
     do {
-        i = action[stack[top]][sym-256];
-        if (i == ACC)
+        i = action[stack[top]][sym-256]; // action table
+        // row: stack[top] (state num)
+        // column: sym-256 (symbol)
+        if (i == ACC) // repeats until it is accepted
             printf("Success!\n");
         else if (i > 0) shift(i);
         else if (i < 0) reduce(-i);
-        else yyerror(); // i == 0
+        else yyerror(); // i == 0: blank entry (error)
     } while (i != ACC);
 }
 void push(int i){
     stack[++top] = i;
 }
 void shift(int i){
-    push(i);
-    value[top] = yylval;
-    sym = yylex();
+    push(i); // push the state number
+    value[top] = yylval; // push the value
+    sym = yylex(); // next token
 }
 void reduce(int i){
     int old_top;
-    top -= prod_length[i];
-    old_top = top;
-    push(go_to[stack[old_top]][prod_left[i]]);
+    top -= prod_length[i]; 
+    old_top = top; // pop the RHS pair
+    push(go_to[stack[old_top]][prod_left[i]]); // push the goto state for LHS
 
-    switch (i){
-        case 1:
+    switch (i){ // caculation
+        case 1: // production rule number
             value[top] = value[old_top+1] + value[old_top+3];
             break;
         case 2:
@@ -110,13 +113,13 @@ void reduce(int i){
 int yylex(void){
     static char ch = ' ';
     int i = 0;
-    while (ch == ' ' || ch == '\t') ch = getchar();
+    while (ch == ' ' || ch == '\t') ch = getchar(); // ignore space, tab
     if (isdigit(ch)){
         do {
             yytext[i++] = ch;
             ch = getchar();
-        } while (isdigit(ch));
-        yytext[i] = 0;
+        } while (isdigit(ch)); // multi-digit integer
+        yytext[i] = (char)0; // NUL
         yylval = atoi(yytext);
         return(NUMBER);
     } else if (ch == '+') {ch = getchar(); return(PLUS);}
