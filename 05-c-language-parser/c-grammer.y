@@ -11,7 +11,7 @@ extern int line_no, syntax_err;
     RETURN_SYM CONTINUE_SYM BREAK_SYM GOTO_SYM
     COMMA ASSIGN STAR ARROW PLUSPLUS MINUSMINUS
     AMP EXCL MINUS PLUS SIZEOF_SYM SLASH PERCENT
-    LSS GTR LEQ GEQ EQL NEQ AMPAMP BARBAR
+    LSS GTR LEQ REQ GEQ EQL NEQ AMPAMP BARBAR
     LR RR LP RP LB RB SEMICOLON COLON DOTDOTDOT PERIOD
 %start program
 
@@ -162,6 +162,9 @@ initializer
     | LR initializer_list RR
     | LR initializer_list COMMA RR
     ;
+initializer_list
+    : initializer
+    | initializer_list COMMA initializer
 statement
     : labeled_statement
     | compound_statement
@@ -233,7 +236,7 @@ arg_expression_list_opt
     ;
 arg_expression_list
     : assignment_expression
-    | expression_list COMMA assignment_expression
+    | arg_expression_list COMMA assignment_expression
     ;
 unary_expression
     : postfix_expression
