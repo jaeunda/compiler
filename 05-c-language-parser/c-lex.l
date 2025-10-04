@@ -1,18 +1,19 @@
 digit [0-9]
 letter [a-zA-Z_]
-delim [\t]
+delim [ \t]
 line [\n]
 ws {delim}+
 
 %{
 #include "y.tab.h"
 extern int yylval;
+extern int line_no;
 char *makeString();
 int checkIdentifier();
 %}
 %%
 {ws}        { }
-{line}      { }
+{line}      { line_no++; }
 auto        { return(AUTO_SYM); }
 break       { return(BREAK_SYM); }
 case        { return(CASE_SYM); }
@@ -61,15 +62,14 @@ while       { return(WHILE_SYM); }
 "\+"        { return(PLUS); }
 "\-"        { return(MINUS); }
 "\="        { return(ASSIGN); }
-
-{digit}+                    { yylval=atoi(yytext); return(INTEGER_CONSTANT); }
-{digit}+\.{digit}+          { yylval=makeString(yytext); return(FLOAT_CONSTANT); }
+{digit}+                    { return(INTEGER_CONSTANT); }
+{digit}+\.{digit}+          { return(FLOAT_CONSTANT); }
 {letter}({letter}|{digit})* { return(checkIdentifier(yytext)); }
-\"([^"\n]|\\["\n])*\"       { return(yylval=makeString(yytext)); return(STRING_LITERAL); }
-\'([^'\n]|\'\')\'           { yylval=*(yytext+1); return(CHARACTER_CONSTANT); }
+\"([^"\n]|\\["\n])*\"       { return(STRING_LITERAL); }
+\'([^'\n]|\'\')\'           { return(CHARACTER_CONSTANT); }
 "//"[^\n]*                  { }
-%%
 
+%%
 char *makeString(char *s){
     char *t;
     t=malloc(strlen(s)+1);
