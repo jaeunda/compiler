@@ -2125,10 +2125,8 @@ int checkIdentifier(char *s){
     }
 
     if (!id){
-        yylval = makeString(s);
         return(IDENTIFIER);
     } else {
-        yylval = id;
         return(TYPE_IDENTIFIER);
     }
 }
