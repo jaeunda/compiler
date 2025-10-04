@@ -1,8 +1,3 @@
-%{
-#include "type.h"
-extern int line_no, syntax_err;
-
-%}
 %token IDENTIFIER TYPE_IDENTIFIER INTEGER_CONSTANT FLOAT_CONSTANT CHARACTER_CONSTANT STRING_LITERAL
     AUTO_SYM STATIC_SYM CONST_SYM TYPEDEF_SYM
     STRUCT_SYM UNION_SYM ENUM_SYM
@@ -320,7 +315,6 @@ constant_expression
 %%
 
 extern char *yytext;
-yyerror(char *s){
-    syntax_err++;
-    printf("line %d: %s near %s\n", line_no, s, yytext);
+void yyerror(char *s){
+    printf("Syntax Error: %s near %s\n", s, yytext);
 }
