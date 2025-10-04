@@ -315,6 +315,6 @@ constant_expression
 %%
 
 extern char *yytext;
-yyerror(char *s){
+void yyerror(char *s){
     printf("Syntax Error: %s near %s\n", s, yytext);
 }
