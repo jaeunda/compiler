@@ -18,6 +18,7 @@ int checkIdentifier();
 auto        { return(AUTO_SYM); }
 break       { return(BREAK_SYM); }
 case        { return(CASE_SYM); }
+const       { return(CONST_SYM); }
 continue    { return(CONTINUE_SYM); }
 default     { return(DEFAULT_SYM); }
 do          { return(DO_SYM); }
