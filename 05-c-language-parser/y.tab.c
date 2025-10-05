@@ -1812,7 +1812,8 @@ yyreturnlab:
 #line 315 "c-grammar.y"
 
 #include <stdio.h>
+static int line_no = 0;
 extern char *yytext;
 void yyerror(char *s){
-    printf("Syntax Error: %s near %s\n", s, yytext);
+    printf("Syntax Error in line %d: %s near %s\n", line_no, s, yytext);
 }
