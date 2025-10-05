@@ -107,8 +107,8 @@ declarator
     | direct_declarator
     ;
 pointer
-    : STAR type_qualifier
-    | STAR type_qualifier pointer
+    : STAR 
+    | STAR pointer
     ;
 direct_declarator
     : IDENTIFIER
