@@ -2126,10 +2126,10 @@ int checkIdentifier(char *s){
     }
 
     if (table[i] != (char *)0){
-        yylval = IDENTIFIER;
-        return(IDENTIFIER);
-    } else {
         yylval = TYPE_IDENTIFIER;
         return(TYPE_IDENTIFIER);
+    } else {
+        yylval = IDENTIFIER;
+        return(IDENTIFIER);
     }
 }
