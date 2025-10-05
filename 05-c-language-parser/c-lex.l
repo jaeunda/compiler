@@ -3,7 +3,6 @@ letter [a-zA-Z_]
 delim [ \t]
 line [\n]
 ws {delim}+
-
 %{
 #include "y.tab.h"
 extern int yylval;
@@ -11,7 +10,9 @@ extern int line_no;
 char *makeString();
 int checkIdentifier();
 %}
+
 %%
+
 {ws}        { }
 {line}      { line_no++; }
 auto        { return(AUTO_SYM); }
@@ -32,6 +33,7 @@ switch      { return(SWITCH_SYM); }
 typedef     { return(TYPEDEF_SYM); }
 union       { return(UNION_SYM); }
 while       { return(WHILE_SYM); }
+
 "\+\+"      { return(PLUSPLUS); }
 "\-\-"      { return(MINUSMINUS); }
 "\->"       { return(ARROW); }
@@ -62,11 +64,12 @@ while       { return(WHILE_SYM); }
 "\+"        { return(PLUS); }
 "\-"        { return(MINUS); }
 "\="        { return(ASSIGN); }
-{digit}+                    { return(INTEGER_CONSTANT); }
-{digit}+\.{digit}+          { return(FLOAT_CONSTANT); }
+
+{digit}+                    { yylval = atoi(yytext); return(INTEGER_CONSTANT); }
+{digit}+\.{digit}+          { yylval = makeString(yytext); return(FLOAT_CONSTANT); }
 {letter}({letter}|{digit})* { return(checkIdentifier(yytext)); }
-\"([^"\n]|\\["\n])*\"       { return(STRING_LITERAL); }
-\'([^'\n]|\'\')\'           { return(CHARACTER_CONSTANT); }
+\"([^"\n]|\\["\n])*\"       { yylval = makeString(yytext); return(STRING_LITERAL); }
+\'([^'\n]|\'\')\'           { yylval = *(yytext+1); return(CHARACTER_CONSTANT); }
 "//"[^\n]*                  { }
 
 %%
