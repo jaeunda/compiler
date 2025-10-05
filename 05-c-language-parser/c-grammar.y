@@ -6,7 +6,7 @@
     RETURN_SYM CONTINUE_SYM BREAK_SYM GOTO_SYM
     COMMA ASSIGN STAR ARROW PLUSPLUS MINUSMINUS
     AMP EXCL MINUS PLUS SIZEOF_SYM SLASH PERCENT
-    LSS GTR LEQ REQ GEQ EQL NEQ AMPAMP BARBAR
+    LSS GTR LEQ GEQ EQL NEQ AMPAMP BARBAR
     LR RR LP RP LB RB SEMICOLON COLON DOTDOTDOT PERIOD
 %start program
 
@@ -51,7 +51,7 @@ init_declarator_list
     ;
 init_declarator
     : declarator
-    | declaration ASSIGN initializer
+    | declarator ASSIGN initializer
     ;
 type_specifier
     : struct_specifier
@@ -271,7 +271,7 @@ relational_expression
     | relational_expression LSS shift_expression
     | relational_expression GTR shift_expression
     | relational_expression LEQ shift_expression
-    | relational_expression REQ shift_expression
+    | relational_expression GEQ shift_expression
     ;
 equality_expression
     : relational_expression
@@ -314,7 +314,7 @@ constant_expression
     ;
 %%
 #include <stdio.h>
-static int line_no = 0;
+int line_no = 1;
 extern char *yytext;
 void yyerror(char *s){
     printf("Syntax Error in line %d: %s near %s\n", line_no, s, yytext);
