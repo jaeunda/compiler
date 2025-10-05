@@ -80,7 +80,6 @@ char *makeString(char *s){
     return(t);
 }
 int checkIdentifier(char *s){
-    char *t;
     char *table[] = {"int", "float", "char", "void", (char *)0};
 
     int i = 0;
@@ -90,10 +89,10 @@ int checkIdentifier(char *s){
     }
 
     if (table[i] != (char *)0){
-        yylval = TYPE_IDENTIFIER;
+        yylval = makeString(s);
         return(TYPE_IDENTIFIER);
     } else {
-        yylval = IDENTIFIER;
+        yylval = makeString(s);
         return(IDENTIFIER);
     }
 }
