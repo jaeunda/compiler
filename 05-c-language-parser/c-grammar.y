@@ -27,7 +27,7 @@ function_definition
     | declarator compound_statement
     ;
 declaration
-    : declaration_specifiers init_declarator_list
+    : declaration_specifiers init_declarator_list SEMICOLON
     ;
 declaration_specifiers
     : type_specifier

@@ -95,22 +95,21 @@ extern int yydebug;
     LSS = 296,                     /* LSS  */
     GTR = 297,                     /* GTR  */
     LEQ = 298,                     /* LEQ  */
-    REQ = 299,                     /* REQ  */
-    GEQ = 300,                     /* GEQ  */
-    EQL = 301,                     /* EQL  */
-    NEQ = 302,                     /* NEQ  */
-    AMPAMP = 303,                  /* AMPAMP  */
-    BARBAR = 304,                  /* BARBAR  */
-    LR = 305,                      /* LR  */
-    RR = 306,                      /* RR  */
-    LP = 307,                      /* LP  */
-    RP = 308,                      /* RP  */
-    LB = 309,                      /* LB  */
-    RB = 310,                      /* RB  */
-    SEMICOLON = 311,               /* SEMICOLON  */
-    COLON = 312,                   /* COLON  */
-    DOTDOTDOT = 313,               /* DOTDOTDOT  */
-    PERIOD = 314                   /* PERIOD  */
+    GEQ = 299,                     /* GEQ  */
+    EQL = 300,                     /* EQL  */
+    NEQ = 301,                     /* NEQ  */
+    AMPAMP = 302,                  /* AMPAMP  */
+    BARBAR = 303,                  /* BARBAR  */
+    LR = 304,                      /* LR  */
+    RR = 305,                      /* RR  */
+    LP = 306,                      /* LP  */
+    RP = 307,                      /* RP  */
+    LB = 308,                      /* LB  */
+    RB = 309,                      /* RB  */
+    SEMICOLON = 310,               /* SEMICOLON  */
+    COLON = 311,                   /* COLON  */
+    DOTDOTDOT = 312,               /* DOTDOTDOT  */
+    PERIOD = 313                   /* PERIOD  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -160,22 +159,21 @@ extern int yydebug;
 #define LSS 296
 #define GTR 297
 #define LEQ 298
-#define REQ 299
-#define GEQ 300
-#define EQL 301
-#define NEQ 302
-#define AMPAMP 303
-#define BARBAR 304
-#define LR 305
-#define RR 306
-#define LP 307
-#define RP 308
-#define LB 309
-#define RB 310
-#define SEMICOLON 311
-#define COLON 312
-#define DOTDOTDOT 313
-#define PERIOD 314
+#define GEQ 299
+#define EQL 300
+#define NEQ 301
+#define AMPAMP 302
+#define BARBAR 303
+#define LR 304
+#define RR 305
+#define LP 306
+#define RP 307
+#define LB 308
+#define RB 309
+#define SEMICOLON 310
+#define COLON 311
+#define DOTDOTDOT 312
+#define PERIOD 313
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
