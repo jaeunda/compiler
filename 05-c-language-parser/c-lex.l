@@ -80,13 +80,13 @@ int checkIdentifier(char *s){
     char *t;
     char *table[] = {"int", "float", "char", "void", (char *)0};
 
-    char *id = table[0];
-    while (id){
-        if (!strcmp(id, s)) break;
-        id++;
+    int i = 0;
+    while (table[i] != (char *)0){
+        if (!strcmp(table[i], s)) break;
+        i++;
     }
 
-    if (!id){
+    if (table[i] != (char *)0){
         return(IDENTIFIER);
     } else {
         return(TYPE_IDENTIFIER);
