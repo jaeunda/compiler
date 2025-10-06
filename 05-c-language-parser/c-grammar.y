@@ -107,8 +107,16 @@ declarator
     | direct_declarator
     ;
 pointer
-    : STAR 
-    | STAR pointer
+    : STAR type_qualifier_list_opt
+    | STAR type_qualifier_list_opt pointer
+    ;
+type_qualifier_list_opt
+    : 
+    | type_qualifier_list
+    ;
+type_qualifier_list
+    : type_qualifier
+    | type_qualifier_list type_qualifier
     ;
 direct_declarator
     : IDENTIFIER
