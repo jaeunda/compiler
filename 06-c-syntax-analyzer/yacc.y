@@ -35,7 +35,7 @@ external_declaration
 function_definition
     : declaration_specifiers declarator {$$ = setFunctionDeclaratorSpecifier($2, $1);} 
     compound_statement                  {$$ = setFunctionDeclaratorBody($3, $4);}
-    | declarator                        {$$ = setFunctionDeclaratorSpecifier($1, makeSpecifier(int_type, 0);)}
+    | declarator                        {$$ = setFunctionDeclaratorSpecifier($1, makeSpecifier(int_type, 0));}
     compound_statement                  {$$ = setFunctionDeclaratorBody($2, $3);}
     ;
 declaration_list_opt
