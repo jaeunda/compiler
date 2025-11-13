@@ -78,7 +78,9 @@ void prt_STRING(char *, int);
 void prt_integer(int, int);
 void print_node(A_NODE *,int);
 void print_space(int);
+
 extern A_TYPE *int_type, *float_type, *char_type, *void_type, *string_type;
+
 void print_node(A_NODE *node, int s)
 {
 	print_space(s);
@@ -316,9 +318,13 @@ void prt_A_ID_LIST(A_ID *id, int s)
 		id=id->link;
 	}
 }
+
+
 char *id_kind_name[]={"NULL","VAR","FUNC","PARM","FIELD","TYPE","ENUM",
 	"STRUCT","ENUM_LITERAL"};
 char *spec_name[]={"NULL","AUTO","STATIC","TYPEDEF"};
+
+
 void prt_A_ID_NAME(A_ID *id, int s)
 {
 	print_space(s);
