@@ -81,8 +81,8 @@ initializer_list
     | initializer_list COMMA initializer    {$$ = makeNodeList(N_INIT_LIST, $1, $3);}
     ;
 type_specifier
-    : struct_specifier      {$$ = $1;}
-    | enum_specifier        {$$ = $1;}
+    : struct_type_specifier      {$$ = $1;}
+    | enum_type_specifier        {$$ = $1;}
     | TYPE_IDENTIFIER       {$$ = $1;}
     ;
 struct_type_specifier
@@ -116,7 +116,7 @@ enum_type_specifier
     : ENUM_SYM IDENTIFIER       {$$ = setTypeStructOrEnumIdentifier(T_ENUM, $2, ID_ENUM);}
     LR enumerator_list RR       {$$ = setTypeField($3, $5);}
     | ENUM_SYM                  {$$ = makeType(T_ENUM);}
-    LR enumorator_list RR       {$$ = setTypeField($2, $4);}
+    LR enumerator_list RR       {$$ = setTypeField($2, $4);}
     | ENUM_SYM IDENTIFIER       {$$ = getTypeOfStructOrEnumRefIdentifier(T_ENUM, $2, ID_ENUM);}
     ;
 enumerator_list
