@@ -338,7 +338,7 @@ primary_expression
     | LP expression RP      {$$ = $2;}
     ;
 type_name
-    | declaration_specifiers abstract_declarator_opt
+    : declaration_specifiers abstract_declarator_opt
                             {$$ = setTypeNameSpecifier($2, $1);}
     ;
 %%
