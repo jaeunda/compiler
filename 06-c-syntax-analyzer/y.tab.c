@@ -1667,7 +1667,7 @@ yyreduce:
 
   case 9: /* @2: %empty  */
 #line 38 "yacc.y"
-                                        {yyval = setFunctionDeclaratorSpecifier(yyvsp[0], makeSpecifier(int_type, 0);)}
+                                        {yyval = setFunctionDeclaratorSpecifier(yyvsp[0], makeSpecifier(int_type, 0));}
 #line 1672 "y.tab.c"
     break;
 
