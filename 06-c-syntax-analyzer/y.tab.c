@@ -70,7 +70,7 @@
 #line 1 "yacc.y"
 
 #define YYSTYPE_IS_DECLARED 1
-#define YYSTYPE long long
+typedef long YYSTYPE;
 
 #include "type.h"
 #include "func.h"
@@ -79,7 +79,7 @@ extern int line_no, syntax_err;
 extern A_NODE *root;
 extern A_ID *current_id;
 extern int current_level;
-extern A_TYPE *int_type, *float_type, *char_type, *void_type, *string_type;
+extern A_TYPE *int_type;
 
 #line 85 "y.tab.c"
 

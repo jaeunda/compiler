@@ -6,7 +6,7 @@ ws              {delim}+
 
 %{
 #define YYSTYPE_IS_DECLARED 1
-#define YYSTYPE long long
+typedef long YYSTYPE;
 
 #include "y.tab.h"
 #include "type.h"

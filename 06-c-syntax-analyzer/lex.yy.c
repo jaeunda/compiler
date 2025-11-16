@@ -533,7 +533,7 @@ char *yytext;
 #line 1 "lex.l"
 #line 8 "lex.l"
 #define YYSTYPE_IS_DECLARED 1
-#define YYSTYPE long long
+typedef long YYSTYPE;
 
 #include "y.tab.h"
 #include "type.h"
