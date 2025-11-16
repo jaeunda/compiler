@@ -453,7 +453,8 @@ A_TYPE *setTypeStructOrEnumIdentifier(T_KIND k, char *s, ID_KIND kk) {
     a = searchIdentifierAtCurrentLevel(s, current_id);
     if (a)
         if (a->kind == kk && a->type->kind == k)
-            syntax_error(12, s);
+            if (a->type->field)
+                syntax_error(12, s);
         else 
             return (a->type);
     else
