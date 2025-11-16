@@ -1080,7 +1080,7 @@ YY_RULE_SETUP
 case 52:
 YY_RULE_SETUP
 #line 76 "lex.l"
-{ yylval = (int)makeString(yytext); return(FLOAT_CONSTANT); }
+{ yylval = (YYSTYPE)makeString(yytext); return(FLOAT_CONSTANT); }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
@@ -1091,7 +1091,7 @@ case 54:
 /* rule 54 can match eol */
 YY_RULE_SETUP
 #line 78 "lex.l"
-{ yylval = (int)makeString(yytext); return(STRING_LITERAL); }
+{ yylval = (YYSTYPE)makeString(yytext); return(STRING_LITERAL); }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
@@ -2131,7 +2131,7 @@ int checkIdentifier(char *s){
         id = id->prev;
     }
     if (!id){
-        yylval = (int)makeString(s);
+        yylval = (YYSTYPE)makeString(s);
         return(IDENTIFIER);
     } else if (id->kind == ID_TYPE){
         yylval = id->type;

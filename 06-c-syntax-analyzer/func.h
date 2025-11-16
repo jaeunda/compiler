@@ -316,7 +316,7 @@ A_ID *setFunctionDeclaratorSpecifier(A_ID *id, A_SPECIFIER *p) {
     setDefaultSpecifier(p);
 
     // check function identifier immediately before '('
-    if (id->type->kind != T_FUNC) {
+    if (id->type == 0 || id->type->kind != T_FUNC) {
         syntax_error(21, NULL);
         return (id);
     } else {
@@ -506,6 +506,7 @@ BOOLEAN isPointerOrArrayType(A_TYPE *t) {
     }
     return (FALSE);
 }
+
 
 void initialize() {
     // primitive data types 노드 생성
