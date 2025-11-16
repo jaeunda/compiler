@@ -1,4 +1,7 @@
 %{
+#define YYSTYPE_IS_DECLARED 1
+#define YYSTYPE long long
+
 #include "type.h"
 #include "func.h"
 
@@ -6,7 +9,7 @@ extern int line_no, syntax_err;
 extern A_NODE *root;
 extern A_ID *current_id;
 extern int current_level;
-extern A_TYPE *int_type;
+extern A_TYPE *int_type, *float_type, *char_type, *void_type, *string_type;
 %}
 
 %start program
@@ -49,7 +52,7 @@ declaration_list
     | declaration_list declaration  {$$ = linkDeclaratorList($1, $2);}
     ;
 declaration
-    : declaration_specifiers init_declarator_list SEMICOLON {$$ = setDeclaratorListSpecifier($1, $2);}
+    : declaration_specifiers init_declarator_list_opt SEMICOLON {$$ = setDeclaratorListSpecifier($2, $1);}
     ;
 declaration_specifiers
     : type_specifier                                    {$$ = makeSpecifier($1, 0);}
@@ -85,7 +88,7 @@ initializer_list
 type_specifier
     : struct_type_specifier      {$$ = $1;}
     | enum_type_specifier        {$$ = $1;}
-    | TYPE_IDENTIFIER       {$$ = $1;}
+    | TYPE_IDENTIFIER            {$$ = $1;}
     ;
 struct_type_specifier
     : struct_or_union IDENTIFIER    {$$ = setTypeStructOrEnumIdentifier($1, $2, ID_STRUCT);}
@@ -185,7 +188,7 @@ statement_list_opt
     | statement_list    {$$ = $1;}
     ;
 statement_list
-    : statement                 {$$ = makeNode(N_STMT_LIST, $1, NIL, makeNode(N_INIT_LIST_NIL, NIL, NIL, NIL));}
+    : statement                 {$$ = makeNode(N_STMT_LIST, $1, NIL, makeNode(N_STMT_LIST_NIL, NIL, NIL, NIL));}
     | statement_list statement  {$$ = makeNodeList(N_STMT_LIST, $1, $2);}
     ;
 statement
@@ -201,7 +204,7 @@ labeled_statement
     | DEFAULT_SYM COLON statement                   {$$ = makeNode(N_STMT_LABEL_DEFAULT, NIL, $3, NIL);}
     ;
 compound_statement
-    : LR                    {$$ = current_id; current_level++;} 
+    : LR                    {$$ = current_id; current_level++;} declaration_list_opt
     statement_list_opt RR   {checkForwardReference(); $$ = makeNode(N_STMT_COMPOUND, $3, NIL, $4); current_id = $2; current_level--;}
     ;
 expression_statement

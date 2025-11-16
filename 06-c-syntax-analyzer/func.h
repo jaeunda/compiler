@@ -316,7 +316,7 @@ A_ID *setFunctionDeclaratorSpecifier(A_ID *id, A_SPECIFIER *p) {
     setDefaultSpecifier(p);
 
     // check function identifier immediately before '('
-    if (id->type->kind != T_FUNC) {
+    if (id->type == 0 || id->type->kind != T_FUNC) {
         syntax_error(21, NULL);
         return (id);
     } else {
@@ -453,7 +453,8 @@ A_TYPE *setTypeStructOrEnumIdentifier(T_KIND k, char *s, ID_KIND kk) {
     a = searchIdentifierAtCurrentLevel(s, current_id);
     if (a)
         if (a->kind == kk && a->type->kind == k)
-            syntax_error(12, s);
+            if (a->type->field)
+                syntax_error(12, s);
         else 
             return (a->type);
     else
@@ -506,6 +507,7 @@ BOOLEAN isPointerOrArrayType(A_TYPE *t) {
     }
     return (FALSE);
 }
+
 
 void initialize() {
     // primitive data types 노드 생성
