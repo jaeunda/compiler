@@ -498,6 +498,14 @@ BOOLEAN isNotSameType(A_TYPE *t1, A_TYPE *t2) {
     else
         return (BOOLEAN)(t1 != t2);
 }
+BOOLEAN isPointerOrArrayType(A_TYPE *t) {
+    if (t) {
+        if (t->kind == T_POINTER || t->kind == T_ARRAY)
+            return (TRUE);
+        else return (FALSE);
+    }
+    return (FALSE);
+}
 
 void initialize() {
     // primitive data types 노드 생성

@@ -1,6 +1,7 @@
 %{
 #include "type.h"
 #include "func.h"
+
 extern int line_no, syntax_err;
 extern A_NODE *root;
 extern A_ID *current_id;
@@ -23,7 +24,7 @@ extern A_TYPE *int_type;
 %%
 program
     : translation_unit
-    {root = makeNode(N_PROGRAM, NIL, $1, NIL); checkFowardReference();}
+    {root = makeNode(N_PROGRAM, NIL, $1, NIL); checkForwardReference();}
     ;
 translation_unit
     : external_declaration                  {$$ = $1;}
@@ -48,7 +49,7 @@ declaration_list
     | declaration_list declaration  {$$ = linkDeclaratorList($1, $2);}
     ;
 declaration
-    : declaration_specifiers init_declarator_list SEMICOLON {$$ = setDeclaratorList($1, $2);}
+    : declaration_specifiers init_declarator_list SEMICOLON {$$ = setDeclaratorListSpecifier($1, $2);}
     ;
 declaration_specifiers
     : type_specifier                                    {$$ = makeSpecifier($1, 0);}
@@ -78,7 +79,7 @@ initializer
     | LR initializer_list RR            {$$ = $2;}
     ;
 initializer_list
-    : initializer                           {$$ = makeNode(N_INIT_LIST, $1, NIL, makeNode(N_INIT_LIST_NIL, NIL, NIL));}
+    : initializer                           {$$ = makeNode(N_INIT_LIST, $1, NIL, makeNode(N_INIT_LIST_NIL, NIL, NIL, NIL));}
     | initializer_list COMMA initializer    {$$ = makeNodeList(N_INIT_LIST, $1, $3);}
     ;
 type_specifier
@@ -89,10 +90,10 @@ type_specifier
 struct_type_specifier
     : struct_or_union IDENTIFIER    {$$ = setTypeStructOrEnumIdentifier($1, $2, ID_STRUCT);}
     LR                              {$$ = current_id; current_level++;}
-    struct_declaration_list RR      {checkFowardReference(); $$ = setTypeField($3, $6); current_level--; current_id = $5;}
+    struct_declaration_list RR      {checkForwardReference(); $$ = setTypeField($3, $6); current_level--; current_id = $5;}
     | struct_or_union               {$$ = makeType($1);}
     LR                              {$$ = current_id; current_level++;}
-    struct_declaration_list RR      {checkFowardReference(); $$ = setTypeField($2, $5); current_level--; current_id = $4;}
+    struct_declaration_list RR      {checkForwardReference(); $$ = setTypeField($2, $5); current_level--; current_id = $4;}
     | struct_or_union IDENTIFIER    {$$ = getTypeOfStructOrEnumRefIdentifier($1, $2, ID_STRUCT);}
     ;
 struct_or_union
@@ -144,7 +145,7 @@ direct_declarator
                             {$$ = setDeclaratorElementType($1, setTypeExpr(makeType(T_ARRAY), $3));}
     | direct_declarator LP  {$$ = current_id; current_level++;}
     parameter_type_list_opt RP
-                            {checkFowardReference(); current_id = $3; current_level--;
+                            {checkForwardReference(); current_id = $3; current_level--;
                             $$ = setDeclaratorElementType($1, setTypeField(makeType(T_FUNC), $4));}
     ;
 parameter_type_list_opt
@@ -201,7 +202,7 @@ labeled_statement
     ;
 compound_statement
     : LR                    {$$ = current_id; current_level++;} 
-    statement_list_opt RR   {checkFowardReference(); $$ = makeNode(N_STMT_COMPOUND, $3, NIL, $4); current_id = $2; current_level--;}
+    statement_list_opt RR   {checkForwardReference(); $$ = makeNode(N_STMT_COMPOUND, $3, NIL, $4); current_id = $2; current_level--;}
     ;
 expression_statement
     : SEMICOLON             {$$ = makeNode(N_STMT_EMPTY, NIL, NIL, NIL);}
@@ -237,7 +238,7 @@ arg_expression_list
     : assignment_expression
     {$$ = makeNode(N_ARG_LIST, $1, NIL, makeNode(N_ARG_LIST_NIL, NIL, NIL, NIL));}
     | arg_expression_list COMMA assignment_expression
-    {$$ = makeNode(N_ARG_LIST, $1, $3);}
+    {$$ = makeNodeList(N_ARG_LIST, $1, $3);}
     ;
 constant_expression_opt
     :                       {$$ = NIL;}
@@ -348,4 +349,7 @@ yyerror(char *s)
 {
     syntax_err++;
     printf("line %d: %s near %s\n", line_no, s, yytext);
+}
+int yywrap() {
+    return (1);
 }
