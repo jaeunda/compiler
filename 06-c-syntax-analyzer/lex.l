@@ -7,6 +7,7 @@ ws              {delim}+
 %{
 #include "y.tab.h"
 #include "type.h"
+#include "func.h"
 
 extern int yylval;
 extern int line_no;

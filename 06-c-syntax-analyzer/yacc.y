@@ -1,5 +1,6 @@
 %{
 #include "type.h"
+#include "func.h"
 extern int line_no, syntax_err;
 extern A_NODE *root;
 extern A_ID *current_id;
