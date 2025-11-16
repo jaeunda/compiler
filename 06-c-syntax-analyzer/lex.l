@@ -5,10 +5,13 @@ line            [\n]
 ws              {delim}+
 
 %{
+#define YYSTYPE_IS_DECLARED 1
+#define YYSTYPE long long
+
 #include "y.tab.h"
 #include "type.h"
 
-extern int yylval;
+extern YYSTYPE yylval;
 extern int line_no;
 extern A_ID *current_id;
 

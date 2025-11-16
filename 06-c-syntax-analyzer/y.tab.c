@@ -69,6 +69,9 @@
 /* First part of user prologue.  */
 #line 1 "yacc.y"
 
+#define YYSTYPE_IS_DECLARED 1
+#define YYSTYPE long long
+
 #include "type.h"
 #include "func.h"
 
@@ -78,7 +81,7 @@ extern A_ID *current_id;
 extern int current_level;
 extern A_TYPE *int_type;
 
-#line 82 "y.tab.c"
+#line 85 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -789,24 +792,24 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    26,    26,    30,    31,    34,    35,    38,    38,    40,
-      40,    52,    55,    56,    57,    58,    61,    62,    63,    70,
-      71,    74,    75,    78,    79,    82,    83,    86,    87,    88,
-      91,    92,    91,    94,    95,    94,    97,   100,   101,   104,
-     105,   108,   111,   112,   115,   118,   118,   120,   120,   122,
-     125,   126,   129,   130,   130,   134,   135,   138,   139,   142,
-     143,   144,   146,   146,   152,   153,   156,   157,   160,   161,
-     164,   165,   168,   169,   172,   173,   174,   177,   178,   179,
-     180,   181,   184,   185,   188,   189,   192,   193,   194,   195,
-     196,   197,   200,   201,   204,   204,   208,   209,   212,   213,
-     214,   217,   218,   219,   222,   225,   226,   229,   230,   231,
-     234,   235,   238,   240,   244,   245,   248,   251,   254,   257,
-     258,   261,   264,   265,   269,   270,   274,   277,   280,   283,
-     284,   285,   288,   289,   290,   291,   292,   295,   298,   299,
-     300,   303,   304,   305,   306,   309,   310,   313,   314,   315,
-     316,   317,   318,   319,   320,   321,   322,   325,   326,   327,
-     329,   330,   331,   332,   335,   336,   337,   338,   339,   340,
-     343
+       0,    29,    29,    33,    34,    37,    38,    41,    41,    43,
+      43,    55,    58,    59,    60,    61,    64,    65,    66,    73,
+      74,    77,    78,    81,    82,    85,    86,    89,    90,    91,
+      94,    95,    94,    97,    98,    97,   100,   103,   104,   107,
+     108,   111,   114,   115,   118,   121,   121,   123,   123,   125,
+     128,   129,   132,   133,   133,   137,   138,   141,   142,   145,
+     146,   147,   149,   149,   155,   156,   159,   160,   163,   164,
+     167,   168,   171,   172,   175,   176,   177,   180,   181,   182,
+     183,   184,   187,   188,   191,   192,   195,   196,   197,   198,
+     199,   200,   203,   204,   207,   207,   211,   212,   215,   216,
+     217,   220,   221,   222,   225,   228,   229,   232,   233,   234,
+     237,   238,   241,   243,   247,   248,   251,   254,   257,   260,
+     261,   264,   267,   268,   272,   273,   277,   280,   283,   286,
+     287,   288,   291,   292,   293,   294,   295,   298,   301,   302,
+     303,   306,   307,   308,   309,   312,   313,   316,   317,   318,
+     319,   320,   321,   322,   323,   324,   325,   328,   329,   330,
+     332,   333,   334,   335,   338,   339,   340,   341,   342,   343,
+     346
 };
 #endif
 
@@ -1626,1022 +1629,1022 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: translation_unit  */
-#line 27 "yacc.y"
+#line 30 "yacc.y"
     {root = makeNode(N_PROGRAM, NIL, yyvsp[0], NIL); checkForwardReference();}
-#line 1632 "y.tab.c"
+#line 1635 "y.tab.c"
     break;
 
   case 3: /* translation_unit: external_declaration  */
-#line 30 "yacc.y"
+#line 33 "yacc.y"
                                             {yyval = yyvsp[0];}
-#line 1638 "y.tab.c"
+#line 1641 "y.tab.c"
     break;
 
   case 4: /* translation_unit: translation_unit external_declaration  */
-#line 31 "yacc.y"
+#line 34 "yacc.y"
                                             {yyval = linkDeclaratorList(yyvsp[-1], yyvsp[0]);}
-#line 1644 "y.tab.c"
+#line 1647 "y.tab.c"
     break;
 
   case 5: /* external_declaration: function_definition  */
-#line 34 "yacc.y"
+#line 37 "yacc.y"
                                             {yyval = yyvsp[0];}
-#line 1650 "y.tab.c"
+#line 1653 "y.tab.c"
     break;
 
   case 6: /* external_declaration: declaration  */
-#line 35 "yacc.y"
+#line 38 "yacc.y"
                                             {yyval = yyvsp[0];}
-#line 1656 "y.tab.c"
+#line 1659 "y.tab.c"
     break;
 
   case 7: /* @1: %empty  */
-#line 38 "yacc.y"
+#line 41 "yacc.y"
                                         {yyval = setFunctionDeclaratorSpecifier(yyvsp[0], yyvsp[-1]);}
-#line 1662 "y.tab.c"
+#line 1665 "y.tab.c"
     break;
 
   case 8: /* function_definition: declaration_specifiers declarator @1 compound_statement  */
-#line 39 "yacc.y"
+#line 42 "yacc.y"
                                         {yyval = setFunctionDeclaratorBody(yyvsp[-1], yyvsp[0]);}
-#line 1668 "y.tab.c"
+#line 1671 "y.tab.c"
     break;
 
   case 9: /* @2: %empty  */
-#line 40 "yacc.y"
+#line 43 "yacc.y"
                                         {yyval = setFunctionDeclaratorSpecifier(yyvsp[0], makeSpecifier(int_type, 0));}
-#line 1674 "y.tab.c"
+#line 1677 "y.tab.c"
     break;
 
   case 10: /* function_definition: declarator @2 compound_statement  */
-#line 41 "yacc.y"
+#line 44 "yacc.y"
                                         {yyval = setFunctionDeclaratorBody(yyvsp[-1], yyvsp[0]);}
-#line 1680 "y.tab.c"
+#line 1683 "y.tab.c"
     break;
 
   case 11: /* declaration: declaration_specifiers init_declarator_list SEMICOLON  */
-#line 52 "yacc.y"
+#line 55 "yacc.y"
                                                             {yyval = setDeclaratorListSpecifier(yyvsp[-2], yyvsp[-1]);}
-#line 1686 "y.tab.c"
+#line 1689 "y.tab.c"
     break;
 
   case 12: /* declaration_specifiers: type_specifier  */
-#line 55 "yacc.y"
+#line 58 "yacc.y"
                                                         {yyval = makeSpecifier(yyvsp[0], 0);}
-#line 1692 "y.tab.c"
+#line 1695 "y.tab.c"
     break;
 
   case 13: /* declaration_specifiers: storage_class_specifier  */
-#line 56 "yacc.y"
+#line 59 "yacc.y"
                                                         {yyval = makeSpecifier(0, yyvsp[0]);}
-#line 1698 "y.tab.c"
+#line 1701 "y.tab.c"
     break;
 
   case 14: /* declaration_specifiers: type_specifier declaration_specifiers  */
-#line 57 "yacc.y"
+#line 60 "yacc.y"
                                                         {yyval = updateSpecifier(yyvsp[0], yyvsp[-1], 0);}
-#line 1704 "y.tab.c"
+#line 1707 "y.tab.c"
     break;
 
   case 15: /* declaration_specifiers: storage_class_specifier declaration_specifiers  */
-#line 58 "yacc.y"
+#line 61 "yacc.y"
                                                         {yyval = updateSpecifier(yyvsp[0], 0, yyvsp[-1]);}
-#line 1710 "y.tab.c"
+#line 1713 "y.tab.c"
     break;
 
   case 16: /* storage_class_specifier: AUTO_SYM  */
-#line 61 "yacc.y"
+#line 64 "yacc.y"
                     {yyval = S_AUTO;}
-#line 1716 "y.tab.c"
+#line 1719 "y.tab.c"
     break;
 
   case 17: /* storage_class_specifier: STATIC_SYM  */
-#line 62 "yacc.y"
+#line 65 "yacc.y"
                     {yyval = S_STATIC;}
-#line 1722 "y.tab.c"
+#line 1725 "y.tab.c"
     break;
 
   case 18: /* storage_class_specifier: TYPEDEF_SYM  */
-#line 63 "yacc.y"
+#line 66 "yacc.y"
                     {yyval = S_TYPEDEF;}
-#line 1728 "y.tab.c"
+#line 1731 "y.tab.c"
     break;
 
   case 19: /* init_declarator_list: init_declarator  */
-#line 70 "yacc.y"
+#line 73 "yacc.y"
                                                     {yyval = yyvsp[0];}
-#line 1734 "y.tab.c"
+#line 1737 "y.tab.c"
     break;
 
   case 20: /* init_declarator_list: init_declarator_list COMMA init_declarator  */
-#line 71 "yacc.y"
+#line 74 "yacc.y"
                                                     {yyval = linkDeclaratorList(yyvsp[-2], yyvsp[0]);}
-#line 1740 "y.tab.c"
+#line 1743 "y.tab.c"
     break;
 
   case 21: /* init_declarator: declarator  */
-#line 74 "yacc.y"
+#line 77 "yacc.y"
                                         {yyval = yyvsp[0];}
-#line 1746 "y.tab.c"
+#line 1749 "y.tab.c"
     break;
 
   case 22: /* init_declarator: declarator ASSIGN initializer  */
-#line 75 "yacc.y"
+#line 78 "yacc.y"
                                         {yyval = setDeclaratorInit(yyvsp[-2], yyvsp[0]);}
-#line 1752 "y.tab.c"
+#line 1755 "y.tab.c"
     break;
 
   case 23: /* initializer: constant_expression  */
-#line 78 "yacc.y"
+#line 81 "yacc.y"
                                         {yyval = makeNode(N_INIT_LIST_ONE, NIL, yyvsp[0], NIL);}
-#line 1758 "y.tab.c"
+#line 1761 "y.tab.c"
     break;
 
   case 24: /* initializer: LR initializer_list RR  */
-#line 79 "yacc.y"
+#line 82 "yacc.y"
                                         {yyval = yyvsp[-1];}
-#line 1764 "y.tab.c"
+#line 1767 "y.tab.c"
     break;
 
   case 25: /* initializer_list: initializer  */
-#line 82 "yacc.y"
+#line 85 "yacc.y"
                                             {yyval = makeNode(N_INIT_LIST, yyvsp[0], NIL, makeNode(N_INIT_LIST_NIL, NIL, NIL, NIL));}
-#line 1770 "y.tab.c"
+#line 1773 "y.tab.c"
     break;
 
   case 26: /* initializer_list: initializer_list COMMA initializer  */
-#line 83 "yacc.y"
+#line 86 "yacc.y"
                                             {yyval = makeNodeList(N_INIT_LIST, yyvsp[-2], yyvsp[0]);}
-#line 1776 "y.tab.c"
+#line 1779 "y.tab.c"
     break;
 
   case 27: /* type_specifier: struct_type_specifier  */
-#line 86 "yacc.y"
+#line 89 "yacc.y"
                                  {yyval = yyvsp[0];}
-#line 1782 "y.tab.c"
+#line 1785 "y.tab.c"
     break;
 
   case 28: /* type_specifier: enum_type_specifier  */
-#line 87 "yacc.y"
+#line 90 "yacc.y"
                                  {yyval = yyvsp[0];}
-#line 1788 "y.tab.c"
+#line 1791 "y.tab.c"
     break;
 
   case 29: /* type_specifier: TYPE_IDENTIFIER  */
-#line 88 "yacc.y"
+#line 91 "yacc.y"
                             {yyval = yyvsp[0];}
-#line 1794 "y.tab.c"
+#line 1797 "y.tab.c"
     break;
 
   case 30: /* @3: %empty  */
-#line 91 "yacc.y"
+#line 94 "yacc.y"
                                     {yyval = setTypeStructOrEnumIdentifier(yyvsp[-1], yyvsp[0], ID_STRUCT);}
-#line 1800 "y.tab.c"
+#line 1803 "y.tab.c"
     break;
 
   case 31: /* @4: %empty  */
-#line 92 "yacc.y"
+#line 95 "yacc.y"
                                     {yyval = current_id; current_level++;}
-#line 1806 "y.tab.c"
+#line 1809 "y.tab.c"
     break;
 
   case 32: /* struct_type_specifier: struct_or_union IDENTIFIER @3 LR @4 struct_declaration_list RR  */
-#line 93 "yacc.y"
+#line 96 "yacc.y"
                                     {checkForwardReference(); yyval = setTypeField(yyvsp[-4], yyvsp[-1]); current_level--; current_id = yyvsp[-2];}
-#line 1812 "y.tab.c"
+#line 1815 "y.tab.c"
     break;
 
   case 33: /* @5: %empty  */
-#line 94 "yacc.y"
+#line 97 "yacc.y"
                                     {yyval = makeType(yyvsp[0]);}
-#line 1818 "y.tab.c"
+#line 1821 "y.tab.c"
     break;
 
   case 34: /* @6: %empty  */
-#line 95 "yacc.y"
+#line 98 "yacc.y"
                                     {yyval = current_id; current_level++;}
-#line 1824 "y.tab.c"
+#line 1827 "y.tab.c"
     break;
 
   case 35: /* struct_type_specifier: struct_or_union @5 LR @6 struct_declaration_list RR  */
-#line 96 "yacc.y"
+#line 99 "yacc.y"
                                     {checkForwardReference(); yyval = setTypeField(yyvsp[-4], yyvsp[-1]); current_level--; current_id = yyvsp[-2];}
-#line 1830 "y.tab.c"
+#line 1833 "y.tab.c"
     break;
 
   case 36: /* struct_type_specifier: struct_or_union IDENTIFIER  */
-#line 97 "yacc.y"
+#line 100 "yacc.y"
                                     {yyval = getTypeOfStructOrEnumRefIdentifier(yyvsp[-1], yyvsp[0], ID_STRUCT);}
-#line 1836 "y.tab.c"
+#line 1839 "y.tab.c"
     break;
 
   case 37: /* struct_or_union: STRUCT_SYM  */
-#line 100 "yacc.y"
+#line 103 "yacc.y"
                         {yyval = T_STRUCT;}
-#line 1842 "y.tab.c"
+#line 1845 "y.tab.c"
     break;
 
   case 38: /* struct_or_union: UNION_SYM  */
-#line 101 "yacc.y"
+#line 104 "yacc.y"
                         {yyval = T_UNION;}
-#line 1848 "y.tab.c"
+#line 1851 "y.tab.c"
     break;
 
   case 39: /* struct_declaration_list: struct_declaration  */
-#line 104 "yacc.y"
+#line 107 "yacc.y"
                                                     {yyval = yyvsp[0];}
-#line 1854 "y.tab.c"
+#line 1857 "y.tab.c"
     break;
 
   case 40: /* struct_declaration_list: struct_declaration_list struct_declaration  */
-#line 105 "yacc.y"
+#line 108 "yacc.y"
                                                     {yyval = linkDeclaratorList(yyvsp[-1], yyvsp[0]);}
-#line 1860 "y.tab.c"
+#line 1863 "y.tab.c"
     break;
 
   case 41: /* struct_declaration: type_specifier struct_declarator_list SEMICOLON  */
-#line 108 "yacc.y"
+#line 111 "yacc.y"
                                                         {yyval = setStructDeclaratorListSpecifier(yyvsp[-1], yyvsp[-2]);}
-#line 1866 "y.tab.c"
+#line 1869 "y.tab.c"
     break;
 
   case 42: /* struct_declarator_list: struct_declarator  */
-#line 111 "yacc.y"
+#line 114 "yacc.y"
                                                         {yyval = yyvsp[0];}
-#line 1872 "y.tab.c"
+#line 1875 "y.tab.c"
     break;
 
   case 43: /* struct_declarator_list: struct_declarator_list COMMA struct_declarator  */
-#line 112 "yacc.y"
+#line 115 "yacc.y"
                                                         {yyval = linkDeclaratorList(yyvsp[-2], yyvsp[0]);}
-#line 1878 "y.tab.c"
+#line 1881 "y.tab.c"
     break;
 
   case 44: /* struct_declarator: declarator  */
-#line 115 "yacc.y"
+#line 118 "yacc.y"
                     {yyval = yyvsp[0];}
-#line 1884 "y.tab.c"
+#line 1887 "y.tab.c"
     break;
 
   case 45: /* @7: %empty  */
-#line 118 "yacc.y"
+#line 121 "yacc.y"
                                 {yyval = setTypeStructOrEnumIdentifier(T_ENUM, yyvsp[0], ID_ENUM);}
-#line 1890 "y.tab.c"
+#line 1893 "y.tab.c"
     break;
 
   case 46: /* enum_type_specifier: ENUM_SYM IDENTIFIER @7 LR enumerator_list RR  */
-#line 119 "yacc.y"
+#line 122 "yacc.y"
                                 {yyval = setTypeField(yyvsp[-3], yyvsp[-1]);}
-#line 1896 "y.tab.c"
+#line 1899 "y.tab.c"
     break;
 
   case 47: /* @8: %empty  */
-#line 120 "yacc.y"
+#line 123 "yacc.y"
                                 {yyval = makeType(T_ENUM);}
-#line 1902 "y.tab.c"
+#line 1905 "y.tab.c"
     break;
 
   case 48: /* enum_type_specifier: ENUM_SYM @8 LR enumerator_list RR  */
-#line 121 "yacc.y"
+#line 124 "yacc.y"
                                 {yyval = setTypeField(yyvsp[-3], yyvsp[-1]);}
-#line 1908 "y.tab.c"
+#line 1911 "y.tab.c"
     break;
 
   case 49: /* enum_type_specifier: ENUM_SYM IDENTIFIER  */
-#line 122 "yacc.y"
+#line 125 "yacc.y"
                                 {yyval = getTypeOfStructOrEnumRefIdentifier(T_ENUM, yyvsp[0], ID_ENUM);}
-#line 1914 "y.tab.c"
+#line 1917 "y.tab.c"
     break;
 
   case 50: /* enumerator_list: enumerator  */
-#line 125 "yacc.y"
+#line 128 "yacc.y"
                                         {yyval = yyvsp[0];}
-#line 1920 "y.tab.c"
+#line 1923 "y.tab.c"
     break;
 
   case 51: /* enumerator_list: enumerator_list COMMA enumerator  */
-#line 126 "yacc.y"
+#line 129 "yacc.y"
                                         {yyval = linkDeclaratorList(yyvsp[-2], yyvsp[0]);}
-#line 1926 "y.tab.c"
+#line 1929 "y.tab.c"
     break;
 
   case 52: /* enumerator: IDENTIFIER  */
-#line 129 "yacc.y"
+#line 132 "yacc.y"
                        {yyval = setDeclaratorKind(makeIdentifier(yyvsp[0]), ID_ENUM_LITERAL);}
-#line 1932 "y.tab.c"
+#line 1935 "y.tab.c"
     break;
 
   case 53: /* @9: %empty  */
-#line 130 "yacc.y"
+#line 133 "yacc.y"
                        {yyval = setDeclaratorKind(makeIdentifier(yyvsp[0]), ID_ENUM_LITERAL);}
-#line 1938 "y.tab.c"
+#line 1941 "y.tab.c"
     break;
 
   case 54: /* enumerator: IDENTIFIER @9 ASSIGN expression  */
-#line 131 "yacc.y"
+#line 134 "yacc.y"
                        {yyval = setDeclaratorInit(yyvsp[-2], yyvsp[0]);}
-#line 1944 "y.tab.c"
+#line 1947 "y.tab.c"
     break;
 
   case 55: /* declarator: pointer direct_declarator  */
-#line 134 "yacc.y"
+#line 137 "yacc.y"
                                     {yyval = setDeclaratorElementType(yyvsp[0], yyvsp[-1]);}
-#line 1950 "y.tab.c"
+#line 1953 "y.tab.c"
     break;
 
   case 56: /* declarator: direct_declarator  */
-#line 135 "yacc.y"
+#line 138 "yacc.y"
                                     {yyval = yyvsp[0];}
-#line 1956 "y.tab.c"
+#line 1959 "y.tab.c"
     break;
 
   case 57: /* pointer: STAR  */
-#line 138 "yacc.y"
+#line 141 "yacc.y"
                     {yyval = makeType(T_POINTER);}
-#line 1962 "y.tab.c"
+#line 1965 "y.tab.c"
     break;
 
   case 58: /* pointer: STAR pointer  */
-#line 139 "yacc.y"
+#line 142 "yacc.y"
                     {yyval = setTypeElementType(yyvsp[0], makeType(T_POINTER));}
-#line 1968 "y.tab.c"
+#line 1971 "y.tab.c"
     break;
 
   case 59: /* direct_declarator: IDENTIFIER  */
-#line 142 "yacc.y"
+#line 145 "yacc.y"
                             {yyval = makeIdentifier(yyvsp[0]);}
-#line 1974 "y.tab.c"
+#line 1977 "y.tab.c"
     break;
 
   case 60: /* direct_declarator: LP declarator RP  */
-#line 143 "yacc.y"
+#line 146 "yacc.y"
                             {yyval = yyvsp[-1];}
-#line 1980 "y.tab.c"
+#line 1983 "y.tab.c"
     break;
 
   case 61: /* direct_declarator: direct_declarator LB constant_expression_opt RB  */
-#line 145 "yacc.y"
+#line 148 "yacc.y"
                             {yyval = setDeclaratorElementType(yyvsp[-3], setTypeExpr(makeType(T_ARRAY), yyvsp[-1]));}
-#line 1986 "y.tab.c"
+#line 1989 "y.tab.c"
     break;
 
   case 62: /* @10: %empty  */
-#line 146 "yacc.y"
+#line 149 "yacc.y"
                             {yyval = current_id; current_level++;}
-#line 1992 "y.tab.c"
+#line 1995 "y.tab.c"
     break;
 
   case 63: /* direct_declarator: direct_declarator LP @10 parameter_type_list_opt RP  */
-#line 148 "yacc.y"
+#line 151 "yacc.y"
                             {checkForwardReference(); current_id = yyvsp[-2]; current_level--;
                             yyval = setDeclaratorElementType(yyvsp[-4], setTypeField(makeType(T_FUNC), yyvsp[-1]));}
-#line 1999 "y.tab.c"
+#line 2002 "y.tab.c"
     break;
 
   case 64: /* parameter_type_list_opt: %empty  */
-#line 152 "yacc.y"
+#line 155 "yacc.y"
                             {yyval = NIL;}
-#line 2005 "y.tab.c"
+#line 2008 "y.tab.c"
     break;
 
   case 65: /* parameter_type_list_opt: parameter_type_list  */
-#line 153 "yacc.y"
+#line 156 "yacc.y"
                             {yyval = yyvsp[0];}
-#line 2011 "y.tab.c"
+#line 2014 "y.tab.c"
     break;
 
   case 66: /* parameter_type_list: parameter_list  */
-#line 156 "yacc.y"
+#line 159 "yacc.y"
                                         {yyval = yyvsp[0];}
-#line 2017 "y.tab.c"
+#line 2020 "y.tab.c"
     break;
 
   case 67: /* parameter_type_list: parameter_list COMMA DOTDOTDOT  */
-#line 157 "yacc.y"
+#line 160 "yacc.y"
                                         {yyval = linkDeclaratorList(yyvsp[-2], setDeclaratorKind(makeDummyIdentifier(), ID_PARM));}
-#line 2023 "y.tab.c"
+#line 2026 "y.tab.c"
     break;
 
   case 68: /* parameter_list: parameter_declaration  */
-#line 160 "yacc.y"
+#line 163 "yacc.y"
                                                     {yyval = yyvsp[0];}
-#line 2029 "y.tab.c"
+#line 2032 "y.tab.c"
     break;
 
   case 69: /* parameter_list: parameter_list COMMA parameter_declaration  */
-#line 161 "yacc.y"
+#line 164 "yacc.y"
                                                     {yyval = linkDeclaratorList(yyvsp[-2], yyvsp[0]);}
-#line 2035 "y.tab.c"
+#line 2038 "y.tab.c"
     break;
 
   case 70: /* parameter_declaration: declaration_specifiers declarator  */
-#line 164 "yacc.y"
+#line 167 "yacc.y"
                                                         {yyval = setParameterDeclaratorSpecifier(yyvsp[0], yyvsp[-1]);}
-#line 2041 "y.tab.c"
+#line 2044 "y.tab.c"
     break;
 
   case 71: /* parameter_declaration: declaration_specifiers abstract_declarator_opt  */
-#line 165 "yacc.y"
+#line 168 "yacc.y"
                                                         {yyval = setParameterDeclaratorSpecifier(setDeclaratorType(makeDummyIdentifier(), yyvsp[0]), yyvsp[-1]);}
-#line 2047 "y.tab.c"
+#line 2050 "y.tab.c"
     break;
 
   case 72: /* abstract_declarator_opt: %empty  */
-#line 168 "yacc.y"
+#line 171 "yacc.y"
                                 {yyval = NIL;}
-#line 2053 "y.tab.c"
+#line 2056 "y.tab.c"
     break;
 
   case 73: /* abstract_declarator_opt: abstract_declarator  */
-#line 169 "yacc.y"
+#line 172 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2059 "y.tab.c"
+#line 2062 "y.tab.c"
     break;
 
   case 74: /* abstract_declarator: direct_abstract_declarator  */
-#line 172 "yacc.y"
+#line 175 "yacc.y"
                                             {yyval = yyvsp[0];}
-#line 2065 "y.tab.c"
+#line 2068 "y.tab.c"
     break;
 
   case 75: /* abstract_declarator: pointer  */
-#line 173 "yacc.y"
+#line 176 "yacc.y"
                                             {yyval = makeType(T_POINTER);}
-#line 2071 "y.tab.c"
+#line 2074 "y.tab.c"
     break;
 
   case 76: /* abstract_declarator: pointer direct_abstract_declarator  */
-#line 174 "yacc.y"
+#line 177 "yacc.y"
                                             {yyval = setTypeElementType(yyvsp[0], makeType(T_POINTER));}
-#line 2077 "y.tab.c"
+#line 2080 "y.tab.c"
     break;
 
   case 77: /* direct_abstract_declarator: LP abstract_declarator RP  */
-#line 177 "yacc.y"
+#line 180 "yacc.y"
                                             {yyval = yyvsp[-1];}
-#line 2083 "y.tab.c"
+#line 2086 "y.tab.c"
     break;
 
   case 78: /* direct_abstract_declarator: LB constant_expression_opt RB  */
-#line 178 "yacc.y"
+#line 181 "yacc.y"
                                             {yyval = setTypeExpr(makeType(T_ARRAY), yyvsp[-1]);}
-#line 2089 "y.tab.c"
+#line 2092 "y.tab.c"
     break;
 
   case 79: /* direct_abstract_declarator: LP parameter_type_list_opt RP  */
-#line 179 "yacc.y"
+#line 182 "yacc.y"
                                             {yyval = setTypeExpr(makeType(T_FUNC), yyvsp[-1]);}
-#line 2095 "y.tab.c"
+#line 2098 "y.tab.c"
     break;
 
   case 80: /* direct_abstract_declarator: direct_abstract_declarator LB constant_expression_opt RB  */
-#line 180 "yacc.y"
+#line 183 "yacc.y"
                                                                 {yyval = setTypeElementType(yyvsp[-3], setTypeExpr(makeType(T_ARRAY), yyvsp[-1]));}
-#line 2101 "y.tab.c"
+#line 2104 "y.tab.c"
     break;
 
   case 81: /* direct_abstract_declarator: direct_abstract_declarator LP parameter_type_list_opt RP  */
-#line 181 "yacc.y"
+#line 184 "yacc.y"
                                                                 {yyval = setTypeElementType(yyvsp[-3], setTypeExpr(makeType(T_FUNC), yyvsp[-1]));}
-#line 2107 "y.tab.c"
+#line 2110 "y.tab.c"
     break;
 
   case 82: /* statement_list_opt: %empty  */
-#line 184 "yacc.y"
+#line 187 "yacc.y"
                         {yyval = makeNode(N_STMT_LIST_NIL, NIL, NIL, NIL);}
-#line 2113 "y.tab.c"
+#line 2116 "y.tab.c"
     break;
 
   case 83: /* statement_list_opt: statement_list  */
-#line 185 "yacc.y"
+#line 188 "yacc.y"
                         {yyval = yyvsp[0];}
-#line 2119 "y.tab.c"
+#line 2122 "y.tab.c"
     break;
 
   case 84: /* statement_list: statement  */
-#line 188 "yacc.y"
+#line 191 "yacc.y"
                                 {yyval = makeNode(N_STMT_LIST, yyvsp[0], NIL, makeNode(N_INIT_LIST_NIL, NIL, NIL, NIL));}
-#line 2125 "y.tab.c"
+#line 2128 "y.tab.c"
     break;
 
   case 85: /* statement_list: statement_list statement  */
-#line 189 "yacc.y"
+#line 192 "yacc.y"
                                 {yyval = makeNodeList(N_STMT_LIST, yyvsp[-1], yyvsp[0]);}
-#line 2131 "y.tab.c"
+#line 2134 "y.tab.c"
     break;
 
   case 86: /* statement: labeled_statement  */
-#line 192 "yacc.y"
+#line 195 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2137 "y.tab.c"
+#line 2140 "y.tab.c"
     break;
 
   case 87: /* statement: compound_statement  */
-#line 193 "yacc.y"
+#line 196 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2143 "y.tab.c"
+#line 2146 "y.tab.c"
     break;
 
   case 88: /* statement: expression_statement  */
-#line 194 "yacc.y"
+#line 197 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2149 "y.tab.c"
+#line 2152 "y.tab.c"
     break;
 
   case 89: /* statement: selection_statement  */
-#line 195 "yacc.y"
+#line 198 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2155 "y.tab.c"
+#line 2158 "y.tab.c"
     break;
 
   case 90: /* statement: iteration_statement  */
-#line 196 "yacc.y"
+#line 199 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2161 "y.tab.c"
+#line 2164 "y.tab.c"
     break;
 
   case 91: /* statement: jump_statement  */
-#line 197 "yacc.y"
+#line 200 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2167 "y.tab.c"
+#line 2170 "y.tab.c"
     break;
 
   case 92: /* labeled_statement: CASE_SYM constant_expression COLON statement  */
-#line 200 "yacc.y"
+#line 203 "yacc.y"
                                                     {yyval = makeNode(N_STMT_LABEL_CASE, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2173 "y.tab.c"
+#line 2176 "y.tab.c"
     break;
 
   case 93: /* labeled_statement: DEFAULT_SYM COLON statement  */
-#line 201 "yacc.y"
+#line 204 "yacc.y"
                                                     {yyval = makeNode(N_STMT_LABEL_DEFAULT, NIL, yyvsp[0], NIL);}
-#line 2179 "y.tab.c"
+#line 2182 "y.tab.c"
     break;
 
   case 94: /* @11: %empty  */
-#line 204 "yacc.y"
+#line 207 "yacc.y"
                             {yyval = current_id; current_level++;}
-#line 2185 "y.tab.c"
+#line 2188 "y.tab.c"
     break;
 
   case 95: /* compound_statement: LR @11 statement_list_opt RR  */
-#line 205 "yacc.y"
+#line 208 "yacc.y"
                             {checkForwardReference(); yyval = makeNode(N_STMT_COMPOUND, yyvsp[-1], NIL, yyvsp[0]); current_id = yyvsp[-2]; current_level--;}
-#line 2191 "y.tab.c"
+#line 2194 "y.tab.c"
     break;
 
   case 96: /* expression_statement: SEMICOLON  */
-#line 208 "yacc.y"
+#line 211 "yacc.y"
                             {yyval = makeNode(N_STMT_EMPTY, NIL, NIL, NIL);}
-#line 2197 "y.tab.c"
+#line 2200 "y.tab.c"
     break;
 
   case 97: /* expression_statement: expression SEMICOLON  */
-#line 209 "yacc.y"
+#line 212 "yacc.y"
                             {yyval = makeNode(N_STMT_EXPRESSION, NIL, yyvsp[-1], NIL);}
-#line 2203 "y.tab.c"
+#line 2206 "y.tab.c"
     break;
 
   case 98: /* selection_statement: IF_SYM LP expression RP statement  */
-#line 212 "yacc.y"
+#line 215 "yacc.y"
                                                             {yyval = makeNode(N_STMT_IF, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2209 "y.tab.c"
+#line 2212 "y.tab.c"
     break;
 
   case 99: /* selection_statement: IF_SYM LP expression RP statement ELSE_SYM statement  */
-#line 213 "yacc.y"
+#line 216 "yacc.y"
                                                             {yyval = makeNode(N_STMT_IF_ELSE, yyvsp[-4], yyvsp[-2], yyvsp[0]);}
-#line 2215 "y.tab.c"
+#line 2218 "y.tab.c"
     break;
 
   case 100: /* selection_statement: SWITCH_SYM LP expression RP statement  */
-#line 214 "yacc.y"
+#line 217 "yacc.y"
                                                             {yyval = makeNode(N_STMT_SWITCH, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2221 "y.tab.c"
+#line 2224 "y.tab.c"
     break;
 
   case 101: /* iteration_statement: WHILE_SYM LP expression RP statement  */
-#line 217 "yacc.y"
+#line 220 "yacc.y"
                                                             {yyval = makeNode(N_STMT_WHILE, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2227 "y.tab.c"
+#line 2230 "y.tab.c"
     break;
 
   case 102: /* iteration_statement: DO_SYM statement WHILE_SYM LP expression RP SEMICOLON  */
-#line 218 "yacc.y"
+#line 221 "yacc.y"
                                                             {yyval = makeNode(N_STMT_DO, yyvsp[-5], NIL, yyvsp[-2]);}
-#line 2233 "y.tab.c"
+#line 2236 "y.tab.c"
     break;
 
   case 103: /* iteration_statement: FOR_SYM LP for_expression RP statement  */
-#line 219 "yacc.y"
+#line 222 "yacc.y"
                                                             {yyval = makeNode(N_STMT_FOR, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2239 "y.tab.c"
+#line 2242 "y.tab.c"
     break;
 
   case 104: /* for_expression: expression_opt SEMICOLON expression_opt SEMICOLON expression_opt  */
-#line 222 "yacc.y"
+#line 225 "yacc.y"
                                                                         {yyval = makeNode(N_FOR_EXP, yyvsp[-4], yyvsp[-2], yyvsp[0]);}
-#line 2245 "y.tab.c"
+#line 2248 "y.tab.c"
     break;
 
   case 105: /* expression_opt: %empty  */
-#line 225 "yacc.y"
+#line 228 "yacc.y"
                     {yyval = NIL;}
-#line 2251 "y.tab.c"
+#line 2254 "y.tab.c"
     break;
 
   case 106: /* expression_opt: expression  */
-#line 226 "yacc.y"
+#line 229 "yacc.y"
                     {yyval = yyvsp[0];}
-#line 2257 "y.tab.c"
+#line 2260 "y.tab.c"
     break;
 
   case 107: /* jump_statement: RETURN_SYM expression_opt SEMICOLON  */
-#line 229 "yacc.y"
+#line 232 "yacc.y"
                                            {yyval = makeNode(N_STMT_RETURN, NIL, yyvsp[-1], NIL);}
-#line 2263 "y.tab.c"
+#line 2266 "y.tab.c"
     break;
 
   case 108: /* jump_statement: CONTINUE_SYM SEMICOLON  */
-#line 230 "yacc.y"
+#line 233 "yacc.y"
                                            {yyval = makeNode(N_STMT_CONTINUE, NIL, NIL, NIL);}
-#line 2269 "y.tab.c"
+#line 2272 "y.tab.c"
     break;
 
   case 109: /* jump_statement: BREAK_SYM SEMICOLON  */
-#line 231 "yacc.y"
+#line 234 "yacc.y"
                                            {yyval = makeNode(N_STMT_BREAK, NIL, NIL, NIL);}
-#line 2275 "y.tab.c"
+#line 2278 "y.tab.c"
     break;
 
   case 110: /* arg_expression_list_opt: %empty  */
-#line 234 "yacc.y"
+#line 237 "yacc.y"
                             {yyval = makeNode(N_ARG_LIST_NIL, NIL, NIL, NIL);}
-#line 2281 "y.tab.c"
+#line 2284 "y.tab.c"
     break;
 
   case 111: /* arg_expression_list_opt: arg_expression_list  */
-#line 235 "yacc.y"
+#line 238 "yacc.y"
                             {yyval = yyvsp[0];}
-#line 2287 "y.tab.c"
+#line 2290 "y.tab.c"
     break;
 
   case 112: /* arg_expression_list: assignment_expression  */
-#line 239 "yacc.y"
+#line 242 "yacc.y"
     {yyval = makeNode(N_ARG_LIST, yyvsp[0], NIL, makeNode(N_ARG_LIST_NIL, NIL, NIL, NIL));}
-#line 2293 "y.tab.c"
+#line 2296 "y.tab.c"
     break;
 
   case 113: /* arg_expression_list: arg_expression_list COMMA assignment_expression  */
-#line 241 "yacc.y"
+#line 244 "yacc.y"
     {yyval = makeNodeList(N_ARG_LIST, yyvsp[-2], yyvsp[0]);}
-#line 2299 "y.tab.c"
+#line 2302 "y.tab.c"
     break;
 
   case 114: /* constant_expression_opt: %empty  */
-#line 244 "yacc.y"
+#line 247 "yacc.y"
                             {yyval = NIL;}
-#line 2305 "y.tab.c"
+#line 2308 "y.tab.c"
     break;
 
   case 115: /* constant_expression_opt: constant_expression  */
-#line 245 "yacc.y"
+#line 248 "yacc.y"
                             {yyval = yyvsp[0];}
-#line 2311 "y.tab.c"
+#line 2314 "y.tab.c"
     break;
 
   case 116: /* constant_expression: expression  */
-#line 248 "yacc.y"
+#line 251 "yacc.y"
                             {yyval = yyvsp[0];}
-#line 2317 "y.tab.c"
+#line 2320 "y.tab.c"
     break;
 
   case 117: /* expression: comma_expression  */
-#line 251 "yacc.y"
+#line 254 "yacc.y"
                             {yyval = yyvsp[0];}
-#line 2323 "y.tab.c"
+#line 2326 "y.tab.c"
     break;
 
   case 118: /* comma_expression: assignment_expression  */
-#line 254 "yacc.y"
+#line 257 "yacc.y"
                             {yyval = yyvsp[0];}
-#line 2329 "y.tab.c"
+#line 2332 "y.tab.c"
     break;
 
   case 119: /* assignment_expression: conditional_expression  */
-#line 257 "yacc.y"
+#line 260 "yacc.y"
                                                         {yyval = yyvsp[0];}
-#line 2335 "y.tab.c"
+#line 2338 "y.tab.c"
     break;
 
   case 120: /* assignment_expression: unary_expression ASSIGN assignment_expression  */
-#line 258 "yacc.y"
+#line 261 "yacc.y"
                                                         {yyval = makeNode(N_EXP_ASSIGN, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2341 "y.tab.c"
+#line 2344 "y.tab.c"
     break;
 
   case 121: /* conditional_expression: logical_OR_expression  */
-#line 261 "yacc.y"
+#line 264 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2347 "y.tab.c"
+#line 2350 "y.tab.c"
     break;
 
   case 122: /* logical_OR_expression: logical_AND_expression  */
-#line 264 "yacc.y"
+#line 267 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2353 "y.tab.c"
+#line 2356 "y.tab.c"
     break;
 
   case 123: /* logical_OR_expression: logical_OR_expression BARBAR logical_AND_expression  */
-#line 266 "yacc.y"
+#line 269 "yacc.y"
                                 {yyval = makeNode(N_EXP_OR, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2359 "y.tab.c"
+#line 2362 "y.tab.c"
     break;
 
   case 124: /* logical_AND_expression: bitwise_or_expression  */
-#line 269 "yacc.y"
+#line 272 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2365 "y.tab.c"
+#line 2368 "y.tab.c"
     break;
 
   case 125: /* logical_AND_expression: logical_AND_expression AMPAMP bitwise_or_expression  */
-#line 271 "yacc.y"
+#line 274 "yacc.y"
                                 {yyval = makeNode(N_EXP_AND, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2371 "y.tab.c"
+#line 2374 "y.tab.c"
     break;
 
   case 126: /* bitwise_or_expression: bitwise_xor_expression  */
-#line 274 "yacc.y"
+#line 277 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2377 "y.tab.c"
+#line 2380 "y.tab.c"
     break;
 
   case 127: /* bitwise_xor_expression: bitwise_and_expression  */
-#line 277 "yacc.y"
+#line 280 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2383 "y.tab.c"
+#line 2386 "y.tab.c"
     break;
 
   case 128: /* bitwise_and_expression: equality_expression  */
-#line 280 "yacc.y"
+#line 283 "yacc.y"
                                 {yyval = yyvsp[0];}
-#line 2389 "y.tab.c"
+#line 2392 "y.tab.c"
     break;
 
   case 129: /* equality_expression: relational_expression  */
-#line 283 "yacc.y"
+#line 286 "yacc.y"
                                                         {yyval = yyvsp[0];}
-#line 2395 "y.tab.c"
+#line 2398 "y.tab.c"
     break;
 
   case 130: /* equality_expression: equality_expression EQL relational_expression  */
-#line 284 "yacc.y"
+#line 287 "yacc.y"
                                                         {yyval = makeNode(N_EXP_EQL, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2401 "y.tab.c"
+#line 2404 "y.tab.c"
     break;
 
   case 131: /* equality_expression: equality_expression NEQ relational_expression  */
-#line 285 "yacc.y"
+#line 288 "yacc.y"
                                                         {yyval = makeNode(N_EXP_NEQ, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2407 "y.tab.c"
+#line 2410 "y.tab.c"
     break;
 
   case 132: /* relational_expression: shift_expression  */
-#line 288 "yacc.y"
+#line 291 "yacc.y"
                                                         {yyval = yyvsp[0];}
-#line 2413 "y.tab.c"
+#line 2416 "y.tab.c"
     break;
 
   case 133: /* relational_expression: relational_expression LSS shift_expression  */
-#line 289 "yacc.y"
+#line 292 "yacc.y"
                                                         {yyval = makeNode(N_EXP_LSS, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2419 "y.tab.c"
+#line 2422 "y.tab.c"
     break;
 
   case 134: /* relational_expression: relational_expression GTR shift_expression  */
-#line 290 "yacc.y"
+#line 293 "yacc.y"
                                                         {yyval = makeNode(N_EXP_GTR, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2425 "y.tab.c"
+#line 2428 "y.tab.c"
     break;
 
   case 135: /* relational_expression: relational_expression LEQ shift_expression  */
-#line 291 "yacc.y"
+#line 294 "yacc.y"
                                                         {yyval = makeNode(N_EXP_LEQ, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2431 "y.tab.c"
+#line 2434 "y.tab.c"
     break;
 
   case 136: /* relational_expression: relational_expression GEQ shift_expression  */
-#line 292 "yacc.y"
+#line 295 "yacc.y"
                                                         {yyval = makeNode(N_EXP_GEQ, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2437 "y.tab.c"
+#line 2440 "y.tab.c"
     break;
 
   case 137: /* shift_expression: additive_expression  */
-#line 295 "yacc.y"
+#line 298 "yacc.y"
                                                         {yyval = yyvsp[0];}
-#line 2443 "y.tab.c"
+#line 2446 "y.tab.c"
     break;
 
   case 138: /* additive_expression: multiplicative_expression  */
-#line 298 "yacc.y"
+#line 301 "yacc.y"
                                                             {yyval = yyvsp[0];}
-#line 2449 "y.tab.c"
+#line 2452 "y.tab.c"
     break;
 
   case 139: /* additive_expression: additive_expression PLUS multiplicative_expression  */
-#line 299 "yacc.y"
+#line 302 "yacc.y"
                                                             {yyval = makeNode(N_EXP_ADD, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2455 "y.tab.c"
+#line 2458 "y.tab.c"
     break;
 
   case 140: /* additive_expression: additive_expression MINUS multiplicative_expression  */
-#line 300 "yacc.y"
+#line 303 "yacc.y"
                                                             {yyval = makeNode(N_EXP_SUB, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2461 "y.tab.c"
+#line 2464 "y.tab.c"
     break;
 
   case 141: /* multiplicative_expression: cast_expression  */
-#line 303 "yacc.y"
+#line 306 "yacc.y"
                                                         {yyval = yyvsp[0];}
-#line 2467 "y.tab.c"
+#line 2470 "y.tab.c"
     break;
 
   case 142: /* multiplicative_expression: multiplicative_expression STAR cast_expression  */
-#line 304 "yacc.y"
+#line 307 "yacc.y"
                                                         {yyval = makeNode(N_EXP_MUL, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2473 "y.tab.c"
+#line 2476 "y.tab.c"
     break;
 
   case 143: /* multiplicative_expression: multiplicative_expression SLASH cast_expression  */
-#line 305 "yacc.y"
+#line 308 "yacc.y"
                                                         {yyval = makeNode(N_EXP_DIV, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2479 "y.tab.c"
+#line 2482 "y.tab.c"
     break;
 
   case 144: /* multiplicative_expression: multiplicative_expression PERCENT cast_expression  */
-#line 306 "yacc.y"
+#line 309 "yacc.y"
                                                         {yyval = makeNode(N_EXP_MOD, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2485 "y.tab.c"
+#line 2488 "y.tab.c"
     break;
 
   case 145: /* cast_expression: unary_expression  */
-#line 309 "yacc.y"
+#line 312 "yacc.y"
                                         {yyval = yyvsp[0];}
-#line 2491 "y.tab.c"
+#line 2494 "y.tab.c"
     break;
 
   case 146: /* cast_expression: LP type_name RP cast_expression  */
-#line 310 "yacc.y"
+#line 313 "yacc.y"
                                         {yyval = makeNode(N_EXP_CAST, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2497 "y.tab.c"
+#line 2500 "y.tab.c"
     break;
 
   case 147: /* unary_expression: postfix_expression  */
-#line 313 "yacc.y"
+#line 316 "yacc.y"
                                         {yyval = yyvsp[0];}
-#line 2503 "y.tab.c"
+#line 2506 "y.tab.c"
     break;
 
   case 148: /* unary_expression: PLUSPLUS unary_expression  */
-#line 314 "yacc.y"
+#line 317 "yacc.y"
                                         {yyval = makeNode(N_EXP_PRE_INC, NIL, yyvsp[0], NIL);}
-#line 2509 "y.tab.c"
+#line 2512 "y.tab.c"
     break;
 
   case 149: /* unary_expression: MINUSMINUS unary_expression  */
-#line 315 "yacc.y"
+#line 318 "yacc.y"
                                         {yyval = makeNode(N_EXP_PRE_DEC, NIL, yyvsp[0], NIL);}
-#line 2515 "y.tab.c"
+#line 2518 "y.tab.c"
     break;
 
   case 150: /* unary_expression: AMP cast_expression  */
-#line 316 "yacc.y"
+#line 319 "yacc.y"
                                         {yyval = makeNode(N_EXP_AMP, NIL, yyvsp[0], NIL);}
-#line 2521 "y.tab.c"
+#line 2524 "y.tab.c"
     break;
 
   case 151: /* unary_expression: STAR cast_expression  */
-#line 317 "yacc.y"
+#line 320 "yacc.y"
                                         {yyval = makeNode(N_EXP_STAR, NIL, yyvsp[0], NIL);}
-#line 2527 "y.tab.c"
+#line 2530 "y.tab.c"
     break;
 
   case 152: /* unary_expression: EXCL cast_expression  */
-#line 318 "yacc.y"
+#line 321 "yacc.y"
                                         {yyval = makeNode(N_EXP_NOT, NIL, yyvsp[0], NIL);}
-#line 2533 "y.tab.c"
+#line 2536 "y.tab.c"
     break;
 
   case 153: /* unary_expression: MINUS cast_expression  */
-#line 319 "yacc.y"
+#line 322 "yacc.y"
                                         {yyval = makeNode(N_EXP_MINUS, NIL, yyvsp[0], NIL);}
-#line 2539 "y.tab.c"
+#line 2542 "y.tab.c"
     break;
 
   case 154: /* unary_expression: PLUS cast_expression  */
-#line 320 "yacc.y"
+#line 323 "yacc.y"
                                         {yyval = makeNode(N_EXP_PLUS, NIL, yyvsp[0], NIL);}
-#line 2545 "y.tab.c"
+#line 2548 "y.tab.c"
     break;
 
   case 155: /* unary_expression: SIZEOF_SYM unary_expression  */
-#line 321 "yacc.y"
+#line 324 "yacc.y"
                                         {yyval = makeNode(N_EXP_SIZE_EXP, NIL, yyvsp[0], NIL);}
-#line 2551 "y.tab.c"
+#line 2554 "y.tab.c"
     break;
 
   case 156: /* unary_expression: SIZEOF_SYM LP type_name RP  */
-#line 322 "yacc.y"
+#line 325 "yacc.y"
                                         {yyval = makeNode(N_EXP_SIZE_TYPE, NIL, yyvsp[-1], NIL);}
-#line 2557 "y.tab.c"
+#line 2560 "y.tab.c"
     break;
 
   case 157: /* postfix_expression: primary_expression  */
-#line 325 "yacc.y"
+#line 328 "yacc.y"
                                             {yyval = yyvsp[0];}
-#line 2563 "y.tab.c"
+#line 2566 "y.tab.c"
     break;
 
   case 158: /* postfix_expression: postfix_expression LB expression RB  */
-#line 326 "yacc.y"
+#line 329 "yacc.y"
                                             {yyval = makeNode(N_EXP_ARRAY, yyvsp[-3], NIL, yyvsp[-1]);}
-#line 2569 "y.tab.c"
+#line 2572 "y.tab.c"
     break;
 
   case 159: /* postfix_expression: postfix_expression LP arg_expression_list_opt RP  */
-#line 328 "yacc.y"
+#line 331 "yacc.y"
                                             {yyval = makeNode(N_EXP_FUNCTION_CALL, yyvsp[-3], NIL, yyvsp[-1]);}
-#line 2575 "y.tab.c"
+#line 2578 "y.tab.c"
     break;
 
   case 160: /* postfix_expression: postfix_expression PERIOD IDENTIFIER  */
-#line 329 "yacc.y"
+#line 332 "yacc.y"
                                             {yyval = makeNode(N_EXP_STRUCT, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2581 "y.tab.c"
+#line 2584 "y.tab.c"
     break;
 
   case 161: /* postfix_expression: postfix_expression ARROW IDENTIFIER  */
-#line 330 "yacc.y"
+#line 333 "yacc.y"
                                             {yyval = makeNode(N_EXP_ARROW, yyvsp[-2], NIL, yyvsp[0]);}
-#line 2587 "y.tab.c"
+#line 2590 "y.tab.c"
     break;
 
   case 162: /* postfix_expression: postfix_expression PLUSPLUS  */
-#line 331 "yacc.y"
+#line 334 "yacc.y"
                                             {yyval = makeNode(N_EXP_POST_INC, NIL, yyvsp[-1], NIL);}
-#line 2593 "y.tab.c"
+#line 2596 "y.tab.c"
     break;
 
   case 163: /* postfix_expression: postfix_expression MINUSMINUS  */
-#line 332 "yacc.y"
+#line 335 "yacc.y"
                                             {yyval = makeNode(N_EXP_POST_DEC, NIL, yyvsp[-1], NIL);}
-#line 2599 "y.tab.c"
+#line 2602 "y.tab.c"
     break;
 
   case 164: /* primary_expression: IDENTIFIER  */
-#line 335 "yacc.y"
+#line 338 "yacc.y"
                             {yyval = makeNode(N_EXP_IDENT, NIL, getIdentifierDeclared(yyvsp[0]), NIL);}
-#line 2605 "y.tab.c"
+#line 2608 "y.tab.c"
     break;
 
   case 165: /* primary_expression: INTEGER_CONSTANT  */
-#line 336 "yacc.y"
+#line 339 "yacc.y"
                             {yyval = makeNode(N_EXP_INT_CONST, NIL, yyvsp[0], NIL);}
-#line 2611 "y.tab.c"
+#line 2614 "y.tab.c"
     break;
 
   case 166: /* primary_expression: FLOAT_CONSTANT  */
-#line 337 "yacc.y"
+#line 340 "yacc.y"
                             {yyval = makeNode(N_EXP_FLOAT_CONST, NIL, yyvsp[0], NIL);}
-#line 2617 "y.tab.c"
+#line 2620 "y.tab.c"
     break;
 
   case 167: /* primary_expression: CHARACTER_CONSTANT  */
-#line 338 "yacc.y"
+#line 341 "yacc.y"
                             {yyval = makeNode(N_EXP_CHAR_CONST, NIL, yyvsp[0], NIL);}
-#line 2623 "y.tab.c"
+#line 2626 "y.tab.c"
     break;
 
   case 168: /* primary_expression: STRING_LITERAL  */
-#line 339 "yacc.y"
+#line 342 "yacc.y"
                             {yyval = makeNode(N_EXP_STRING_LITERAL, NIL, yyvsp[0], NIL);}
-#line 2629 "y.tab.c"
+#line 2632 "y.tab.c"
     break;
 
   case 169: /* primary_expression: LP expression RP  */
-#line 340 "yacc.y"
+#line 343 "yacc.y"
                             {yyval = yyvsp[-1];}
-#line 2635 "y.tab.c"
+#line 2638 "y.tab.c"
     break;
 
   case 170: /* type_name: declaration_specifiers abstract_declarator_opt  */
-#line 344 "yacc.y"
+#line 347 "yacc.y"
                             {yyval = setTypeNameSpecifier(yyvsp[0], yyvsp[-1]);}
-#line 2641 "y.tab.c"
+#line 2644 "y.tab.c"
     break;
 
 
-#line 2645 "y.tab.c"
+#line 2648 "y.tab.c"
 
       default: break;
     }
@@ -2834,7 +2837,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 346 "yacc.y"
+#line 349 "yacc.y"
 
 extern char *yytext;
 yyerror(char *s)

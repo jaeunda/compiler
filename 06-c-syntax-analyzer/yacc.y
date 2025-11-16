@@ -1,4 +1,7 @@
 %{
+#define YYSTYPE_IS_DECLARED 1
+#define YYSTYPE long long
+
 #include "type.h"
 #include "func.h"
 
