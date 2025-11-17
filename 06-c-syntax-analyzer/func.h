@@ -1,21 +1,6 @@
 #ifndef _FUNC_H_
 #define _FUNC_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "type.h"
-#include "y.tab.h"
-
-extern char *yytext;
-
-A_TYPE *int_type, *char_type, *void_type, *float_type, *string_type;
-A_NODE *root;
-A_ID   *current_id = NIL;
-
-int syntax_err = 0;
-int line_no = 1;
-int current_level = 0;
-
 // Function Signature
 A_NODE		    *makeNode (NODE_NAME, A_NODE *, A_NODE *, A_NODE *);
 A_NODE		    *makeNodeList (NODE_NAME, A_NODE *, A_NODE *);

@@ -1,4 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "type.h"
 #include "func.h"
+
+extern char *yytext;
+
+A_TYPE *int_type, *char_type, *void_type, *float_type, *string_type;
+A_NODE *root;
+A_ID   *current_id = NIL;
+
+int syntax_err = 0;
+int line_no = 1;
+int current_level = 0;
 
 // Make new node for syntax tree
 A_NODE *makeNode(NODE_NAME n, A_NODE *a, A_NODE *b, A_NODE *c) {
