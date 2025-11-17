@@ -99,7 +99,7 @@ A_ID *makeDummyIdentifier() {
     return(id); 
 }
 // make a new type
-A_TYPE *makeType(T_KIND k) {
+A_TYPE *makeType(T_KIND k) { // 새로운 타입테이블 생성
     A_TYPE *t;
     t = (A_TYPE *)malloc(sizeof(A_TYPE));
     // 초기화
@@ -199,6 +199,7 @@ A_ID *linkDeclaratorList(A_ID *id1, A_ID *id2) {
 
 // check if identifier is already declared in primary expression
 A_ID *getIdentifierDeclared(char *s) { // 선언 여부
+    // 이미 선언된 identifier를 리턴하여 노드에 연결
     A_ID *id;
     id = searchIdentifier(s, current_id);
     if (id == NIL)
@@ -274,14 +275,14 @@ A_ID *setFunctionDeclaratorSpecifier(A_ID *id, A_SPECIFIER *p) {
     // check storage class
     if (p->stor)
         syntax_error(25, NULL);
-    setDefaultSpecifier(p);
+    setDefaultSpecifier(p); // return type이 없는 경우 int형으로 지정
 
     // check function identifier immediately before '('
     if (id->type == 0 || id->type->kind != T_FUNC) {
         syntax_error(21, NULL);
         return(id);
     } else {
-        id = setDeclaratorElementType(id, p->type);
+        id = setDeclaratorElementType(id, p->type); // 함수의 리턴 타입 결정
         id->kind = ID_FUNC;
     }
 
@@ -333,7 +334,7 @@ A_ID *setDeclaratorListSpecifier(A_ID *id, A_SPECIFIER *p) {
         a->specifier = p->stor;
 
         if (a->specifier == S_NULL)
-            a->specifier = S_AUTO;
+            a->specifier = S_AUTO; // default storage_class auto
         a = a->link;
     }
     return(id);
