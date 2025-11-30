@@ -1,3 +1,14 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "type.h"
+
+extern int syntax_err;
+extern int semantic_err;
+extern A_NODE *root;
+
+void initialize();
+void print_ast(); // semantic
+
 int main(){
 	initialize();
 	yyparse();
