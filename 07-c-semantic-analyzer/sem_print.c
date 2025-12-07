@@ -74,8 +74,7 @@ void prt_sem_A_TYPE(A_TYPE *, int);
 void prt_sem_A_ID_LIST(A_ID *, int);
 void prt_sem_A_ID(A_ID *, int);
 void prt_sem_A_ID_NAME(A_ID *, int);
-// void prt_sem_STRING(char *, int);
-void prt_sem_LITERAL(int, int);
+void prt_sem_LITERAL(char *, int);
 void prt_sem_integer(int, int);
 void print_node(A_NODE *,int);
 void print_space(int);
@@ -299,20 +298,18 @@ void prt_sem_integer(int a, int s)
 	print_space(s);
 	printf("INT=%d\n", a);
 }
-// void prt_STRING(char *str, int s) {
-// 	print_space(s);
-// 	printf("%s\n", str);
-// }
-void prt_sem_LITERAL(int lit, int s)
+
+void prt_sem_LITERAL(char *str, int s)
 {
 	print_space(s);
 	printf("LITERAL: ");
-	if (literal_table[lit].type ==  int_type)
-		printf("%d\n", literal_table[lit].value.i);
-	if (literal_table[lit].type == float_type)
-		printf("%f\n", literal_table[lit].value.f);
-	else if (literal_table[lit].type == string_type)
-		printf("%s\n", literal_table[lit].value.s);
+	printf("%s\n", str);
+	// if (literal_table[lit].type ==  int_type)
+	// 	printf("%d\n", literal_table[lit].value.i);
+	// if (literal_table[lit].type == float_type)
+	// 	printf("%f\n", literal_table[lit].value.f);
+	// else if (literal_table[lit].type == string_type)
+	// 	printf("%s\n", literal_table[lit].value.s);
 }
 
 char *type_kind_name[]={"NULL","ENUM","ARRAY","STRUCT","UNION","FUNC","POINTER","VOID"};

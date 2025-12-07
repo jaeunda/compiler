@@ -9,6 +9,8 @@ A_LITERAL literal_table[LIT_MAX];
 int literal_no = 0;
 int literal_size = 0;
 
+float atof();
+
 void semantic_analysis(A_NODE *node) {
 	sem_program(node); 
 	set_literal_address(node);
@@ -21,7 +23,7 @@ void set_literal_address(A_NODE *node) {
 	node->value+=literal_size;
 }
 
-void sem_program(A_NODE *node) {
+void sem_program(A_NODE *node) { // 원시 프로그램에서 선언된 전역 변수 크기 계산
 	int i; 
 	switch(node->name) {
 		case N_PROGRAM : 
@@ -85,7 +87,7 @@ A_TYPE *sem_expression(A_NODE *node) {
 		case N_EXP_FLOAT_CONST :
 			lit.type = float_type; 
 			lit.value.f = atof(node->clink); 
-			node->clink = put_literal(lit,node->line); // index of literal table
+			node->clink = put_literal(lit, node->line); // index of literal table
 			result = float_type;
 			break; 
 		case N_EXP_CHAR_CONST :

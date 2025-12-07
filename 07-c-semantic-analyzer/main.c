@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "type.h"
+#include "sem_func.h"
 
 extern int syntax_err;
 extern int semantic_err;
