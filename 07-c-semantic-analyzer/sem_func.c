@@ -1217,7 +1217,7 @@ void semantic_error(int i, int ll, char *s)
         printf("illegal type size in sizeof operation\n");
         break;
     case 40:
-        printf("illegal expression type in relational operation");
+        printf("illegal expression type in relational operation\n");
         break;
     case 41:
         printf("incompatible type in literal\n");

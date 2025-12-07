@@ -1,5 +1,5 @@
 a.out: yacc lex
-	gcc -g y.tab.c lex.yy.c sem_print.c sem_func.c main.c -w
+	gcc -g y.tab.c lex.yy.c func.c sem_print.c sem_func.c main.c -w
 yacc: yacc.y
 	yacc -d yacc.y
 lex: lex.l
