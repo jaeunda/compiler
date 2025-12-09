@@ -54,10 +54,11 @@ int put_literal(A_LITERAL lit, int ll) {
 }
 
 A_TYPE *sem_expression(A_NODE *node) {
-
+// 수식 분석, 필요한 경우 변환
+// 수식의 타입 계산하여 node에 저장하고 리턴
 	A_TYPE *result=NIL, *t, *t1, *t2; 
 	A_ID *id;
-	A_LITERAL lit;
+	A_LITERAL lit = {0};
 	int i;
 	BOOLEAN lvalue=FALSE;
 	switch(node->name) {
@@ -86,6 +87,7 @@ A_TYPE *sem_expression(A_NODE *node) {
 			break;
 		case N_EXP_FLOAT_CONST :
 			lit.type = float_type; 
+            // lit.value.s = node->clink;
 			lit.value.f = atof(node->clink); 
 			node->clink = put_literal(lit, node->line); // index of literal table
 			result = float_type;
@@ -392,7 +394,8 @@ BOOLEAN isModifiableLvalue(A_NODE *node)
 
 // check statement and return local variable size
 int sem_statement(A_NODE *node, int addr, A_TYPE *ret, BOOLEAN sw, BOOLEAN brk, BOOLEAN cnt)
-{
+{ // 명령문 분석
+    // 복합문의 경우 명령문들에 나타난 지역 변수들의 크기를 계산/리턴
 	int local_size = 0, i; 
 	A_LITERAL lit; 
 	A_TYPE *t; 
@@ -515,7 +518,7 @@ void sem_for_expression(A_NODE *node) {
 
 // check statement-list and return local variable size
 int sem_statement_list(A_NODE *node, int addr, A_TYPE *ret, BOOLEAN sw, BOOLEAN brk, BOOLEAN cnt)
-{
+{ // 명령문들 분석
 	int size, i; 
 	switch(node->name) {
 		case N_STMT_LIST:
@@ -537,7 +540,7 @@ int sem_statement_list(A_NODE *node, int addr, A_TYPE *ret, BOOLEAN sw, BOOLEAN 
 
 // check type and return its size (size of incomplete type is 0) 
 int sem_A_TYPE(A_TYPE *t)
-{
+{ // 타입 테이블 분석, 타입의 크기 계산 및 저장
 	A_ID *id; 
 	A_TYPE *tt; 
 	A_LITERAL lit; 
@@ -621,7 +624,7 @@ int sem_A_TYPE(A_TYPE *t)
 			break;
 	} 
 	t->size = result; 
-	return(result);
+	return(result); // 타입의 크기 리턴
 }
 
 // set variable address in declaration-list, and return its total variable size 
@@ -637,7 +640,7 @@ int sem_declaration_list(A_ID *id, int addr)
 
 // check declaration (identifier), set address, and return its size 
 int sem_declaration(A_ID *id,int addr)
-{
+{ // 선언문에 나타난 각 지역변수의 주소 설정, 크기 계산, 크기값 리턴
 	A_TYPE *t;
 	int size = 0,i; 
 	A_LITERAL lit; 

@@ -61,6 +61,9 @@ char * node_name[] = {
 	"N_INIT_LIST_ONE",
 	"N_INIT_LIST_NIL"
 };
+char *id_kind_name[]={"NULL","VAR","FUNC","PARM","FIELD","TYPE","ENUM",
+	"STRUCT","ENUM_LITERAL"};
+char *spec_name[]={"NULL","AUTO","STATIC","TYPEDEF"};
 
 void print_sem_ast(A_NODE *);
 void prt_sem_program(A_NODE *, int);
@@ -303,7 +306,8 @@ void prt_sem_LITERAL(char *str, int s)
 {
 	print_space(s);
 	printf("LITERAL: ");
-	printf("%s\n", str);
+	if (str) printf("%s\n", str);
+	else printf("\n");
 	// if (literal_table[lit].type ==  int_type)
 	// 	printf("%d\n", literal_table[lit].value.i);
 	// if (literal_table[lit].type == float_type)
@@ -383,11 +387,6 @@ void prt_sem_A_ID_LIST(A_ID *id, int s)
 		id=id->link;
 	}
 }
-
-
-char *id_kind_name[]={"NULL","VAR","FUNC","PARM","FIELD","TYPE","ENUM",
-	"STRUCT","ENUM_LITERAL"};
-char *spec_name[]={"NULL","AUTO","STATIC","TYPEDEF"};
 
 
 void prt_sem_A_ID_NAME(A_ID *id, int s)
