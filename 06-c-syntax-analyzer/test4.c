@@ -11,10 +11,10 @@ int main () {
 		int a;
 		int c;
 		char i;
-	} st;
+	} *st;
 
 	a1 = (int) func();
-	st.a = 1;
+	st->a = 1;
 	global_c = (char)1;	
 	return 0;
 }

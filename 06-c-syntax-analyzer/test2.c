@@ -2,6 +2,7 @@ int a = 3;
 char g_c = (char) 3;
 
 void main() {
+    int x , y = 2;
 
     switch (a) {
         case 1:
@@ -14,5 +15,4 @@ void main() {
             a++;
     }
 
-    int x , y = 2;
 }
