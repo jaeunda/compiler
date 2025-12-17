@@ -111,7 +111,7 @@ typedef struct s_id { // 심볼 테이블
 	struct s_id *link;
 } A_ID;
 
-typedef union {int i; float f; char c; char *s;} LIT_VALUE;
+typedef union {int i; double f; char c; char *s;} LIT_VALUE;
 
 typedef struct lit {int addr; A_TYPE *type; LIT_VALUE value;} A_LITERAL;
 

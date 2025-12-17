@@ -9,7 +9,7 @@ A_LITERAL literal_table[LIT_MAX];
 int literal_no = 0;
 int literal_size = 0;
 
-float atof();
+double atof();
 
 void semantic_analysis(A_NODE *node) {
 	sem_program(node); 
