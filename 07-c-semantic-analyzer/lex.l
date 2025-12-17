@@ -73,9 +73,9 @@ while       { return(WHILE_SYM); }
 "\="        { return(ASSIGN); }
 
 {digit}+                    { yylval = atoi(yytext); return(INTEGER_CONSTANT); }
-{digit}+\.{digit}+          { yylval = (YYSTYPE)makeString(yytext); return(FLOAT_CONSTANT); }
+{digit}+\.{digit}+          { yylval = makeString(yytext); return(FLOAT_CONSTANT); }
 {letter}({letter}|{digit})* { return(checkIdentifier(yytext)); }
-\"([^"\n]|\\["\n])*\"       { yylval = (YYSTYPE)makeString(yytext); return(STRING_LITERAL); }
+\"([^"\n]|\\["\n])*\"       { yylval = makeString(yytext); return(STRING_LITERAL); }
 \'([^'\n]|\'\')\'           { yylval = *(yytext+1); return(CHARACTER_CONSTANT); }
 "//"[^\n]*                  { }
 
