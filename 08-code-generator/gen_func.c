@@ -76,7 +76,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
                             gen_code_i(LDA, id->level, id->address);
                             i = id->type->size;
                             // LDI: load indirect
-                            gen_code_i(LDI, 0, i%4 ? i/4+1 : i/4);
+                            gen_code_i(LDI, 0, 0);
                             break;
                         default:
                             gen_error(11, id->line); // error11: illegal identifier in expression
@@ -126,7 +126,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
                 if (i == 1)
                     gen_code_i(LDIB, 0, 0);
                 else
-                    gen_code_i(LDI, 0, i%4 ? i/4+1 : i/4); // word alignment
+                    gen_code_i(LDI, 0, 0); // word alignment
             }
             break;
         case N_EXP_FUNCTION_CALL:
@@ -165,7 +165,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
             if (node->type->size == 1) 
                 gen_code_i(LDXB, 0, 0);
             else
-                gen_code_i(LDX, 0, 1);
+                gen_code_i(LDX, 0, 0);
             // 값 증가
             if (isPointerOrArrayType(node->type)){
                 // 포인터 타입이면 타입 크기만큼 증가
@@ -191,7 +191,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
             if (node->type->size == 1)
                 gen_code_i(LDXB, 0, 0);
             else
-                gen_code_i(LDX, 0, 1);
+                gen_code_i(LDX, 0, 0);
             // 값 감소
             if (isPointerOrArrayType(node->type)){
                 // 포인터 타입이면 타입 크기만큼 감소
@@ -216,7 +216,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
             if (node->type->size == 1)
                 gen_code_i(LDXB, 0, 0);
             else
-                gen_code_i(LDX, 0, 1);
+                gen_code_i(LDX, 0, 0);
             // 값 증가
             if (isPointerOrArrayType(node->type)){
                 // 포인터 타입이면 타입 크기만큼 증가
@@ -242,7 +242,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
             if (node->type->size == 1)
                 gen_code_i(LDXB, 0, 0);
             else
-                gen_code_i(LDX, 0, 1); 
+                gen_code_i(LDX, 0, 0); 
             // 값 감소
             if (isPointerOrArrayType(node->type)){
                 // 포인터 타입이면 타입 크기만큼 증가
@@ -279,7 +279,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
             if (i == 1)
                 gen_code_i(LDIB, 0, 0);
             else    
-                gen_code_i(LDI, 0, i%4 ? i/4+1 : i/4);
+                gen_code_i(LDI, 0, 0);
             break;
         case N_EXP_SIZE_EXP:
             gen_code_i(LITI, 0, node->clink);
@@ -576,7 +576,7 @@ void gen_statement(A_NODE *node, int cont_label, int break_label, A_SWITCH sw[],
         case N_STMT_IF:
             gen_expression(node->llink); // 조건식 평가
             gen_code_l(JPC, 0, l1 = get_label()); // 조건이 거짓이라면 l1으로 점프 (JPC 코드 생성하며 l1 label도 생성)
-            gen_statement(node->clink, cont_label, break_label, 0, 0); // if statement 코드 생성
+            gen_statement(node->rlink, cont_label, break_label, 0, 0); // if statement 코드 생성
             gen_label_number(l1); // l1: if문 종료
             break;
         case N_STMT_IF_ELSE:
