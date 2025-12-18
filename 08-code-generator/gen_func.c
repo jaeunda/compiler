@@ -232,7 +232,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
             if (node->type->size == 1){
                 gen_code_i(STXB, 0, 0);
             } else {
-                gen_code_i(STX, 0, 1);
+                gen_code_i(STX, 0, 0);
             }
             break;
         case N_EXP_PRE_DEC: // 전위 감소 연산자
@@ -420,7 +420,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
             if (i == 1)
                 gen_code_i(STXB, 0, 0);
             else
-                gen_code_i(STX, 0, i%4 ? i/4+1 : i/4);
+                gen_code_i(STX, 0, 0);
             break;
         default:
             gen_error(100, node->line);
