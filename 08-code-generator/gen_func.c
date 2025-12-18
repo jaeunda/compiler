@@ -181,7 +181,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
             if (node->type->size == 1)
                 gen_code_i(STOB, 0, 0);
             else
-                gen_code_i(STO, 0, 1);
+                gen_code_i(STO, 0, 0);
             break;
         case N_EXP_POST_DEC: // 후위 감소 연산자
             gen_expression(node->clink); // 감소 전 값 로드
@@ -207,7 +207,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
             if (node->type->size == 1)
                 gen_code_i(STOB, 0, 0);
             else
-                gen_code_i(STO, 0, 1);
+                gen_code_i(STO, 0, 0);
             break;
         case N_EXP_PRE_INC: // 전위 증가 연산자
             gen_expression_left(node->clink); // 후위 연산자와 달리 변수의 주소부터 로드
@@ -325,7 +325,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
                 gen_code_i(MULI, 0, 0);
             }
             gen_expression(node->rlink);
-            if (isPointerOrArrayType(node->llink->type->element_type->size)){
+            if (isPointerOrArrayType(node->llink->type)){
                 gen_code_i(LITI, 0, node->llink->type->element_type->size);
                 gen_code_i(MULI, 0, 0);
             }
@@ -664,7 +664,7 @@ void gen_statement(A_NODE *node, int cont_label, int break_label, A_SWITCH sw[],
                 gen_code_i(LDA, 1, -i);
                 gen_expression(n);
                 // 결과값 리턴 주소에 저장
-                gen_code_i(STO, 0, i/4);
+                gen_code_i(STO, 0, 0);
             }
             // 함수 종료 및 복귀
             gen_code_i(RET, 0, 0);
