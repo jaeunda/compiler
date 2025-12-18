@@ -311,12 +311,12 @@ A_TYPE *sem_expression(A_NODE *node) {
 		case N_EXP_AND : 
 		case N_EXP_OR : 
 			t=sem_expression(node->llink); 
-			if(!isScalarType(t))
+			if(isScalarType(t))
 				node->llink = convertUsualUnaryConversion(node->llink);
 			else
 				semantic_error(27, node->line);
 			t = sem_expression(node->rlink);
-			if(!isScalarType(t))
+			if(isScalarType(t))
 				node->rlink = convertUsualUnaryConversion(node->rlink);
 			else
 				semantic_error(27, node->line);
