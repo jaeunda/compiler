@@ -397,7 +397,7 @@ void gen_expression(A_NODE *node){ // expression을 평가하여 r-value를 stac
                 gen_code_i(EQLI, 0, 0);
             break;
         case N_EXP_AND: // &&
-            gen_expresison(node->llink);
+            gen_expression(node->llink);
             // short-circuit evaluation
             gen_code_l(JPCR, 0, i=get_label()); // llink expression이 거짓이면 평가하지 않고 점프
             gen_expression(node->rlink);
@@ -592,7 +592,7 @@ void gen_statement(A_NODE *node, int cont_label, int break_label, A_SWITCH sw[],
             gen_error(24, node->line, "N_STMT_SWITCH");
             break;
         case N_STMT_WHILE:
-            l3 = gel_label(); // loop 시작
+            l3 = get_label(); // loop 시작
             gen_label_number(l1 = get_label()); // 조건 검사 (루프 시작)
             gen_expression(node->llink); // 조건식 평가
             gen_code_l(JPC, 0, l2 = get_label()); // 조건이 거짓이면 루프 종료 l2로 점프

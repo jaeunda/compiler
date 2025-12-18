@@ -47,7 +47,7 @@ void main(int argc, char *argv[]){
     if (semantic_err) exit(1);
 
     printf("\nStart Code Generation\n");
-    code_genaration(root);
+    code_generation(root);
 
     exit(0);
 }

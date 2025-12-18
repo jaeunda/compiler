@@ -1,3 +1,6 @@
+#include "type.h"
+#include <stdio.h>
+
 #ifndef _GEN_FUNC_H_
 #define _GEN_FUNC_H_
 
