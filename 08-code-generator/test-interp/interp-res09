@@ -1,0 +1,28 @@
+======== symbol =========
+   1:  printf	-1
+   2:  malloc	-2
+   3:  scanf	-3
+   4:  main	3
+========  code ==========
+   0:  INT	0,12
+   1:  SUP	0,3
+   2:  RET	0,0
+   3:  INT	0,20
+   4:  LDA	1,16
+   5:  LOD	1,12
+   6:  LDA	1,12
+   7:  LDX	0,0
+   8:  INCI	0,0
+   9:  STO	0,0
+  10:  STX	0,0
+  11:  POP	0,1
+  12:  LDA	1,16
+  13:  LDA	1,12
+  14:  LDX	0,0
+  15:  INCI	0,0
+  16:  STX	0,0
+  17:  STX	0,0
+  18:  POP	0,1
+  19:  RET	0,0
+start execution
+end execution

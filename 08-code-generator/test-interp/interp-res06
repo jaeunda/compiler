@@ -1,0 +1,29 @@
+======== symbol =========
+   1:  printf	-1
+   2:  malloc	-2
+   3:  scanf	-3
+   4:  main	13
+   5:  set	3
+========  code ==========
+   0:  INT	0,12
+   1:  SUP	0,13
+   2:  RET	0,0
+   3:  INT	0,16
+   4:  LOD	1,12
+   5:  LITI	0,1
+   6:  LITI	0,4
+   7:  MULI	0,0
+   8:  OFFSET	0,0
+   9:  LITI	0,99
+  10:  STX	0,0
+  11:  POP	0,1
+  12:  RET	0,0
+  13:  INT	0,24
+  14:  INT	0,12
+  15:  LDA	1,12
+  16:  POP	0,4
+  17:  ADDR	0,3
+  18:  CAL	0,0
+  19:  RET	0,0
+start execution
+end execution

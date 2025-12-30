@@ -1,0 +1,22 @@
+	      INT   0, 16
+	      SUP   0, main
+	      RET   0, 0
+main:
+	      INT   0, 20
+	      LDA   1, 16
+	      LOD   1, 12
+	     CVTF   0, 0
+	      LOD   0, 12
+	     ADDF   0, 0
+	      STX   0, 0
+	      POP   0, 1
+	      LDA   1, 12
+	      LOD   1, 16
+	     LITI   0, 10
+	     CVTF   0, 0
+	     ADDF   0, 0
+	     CVTI   0, 0
+	      STX   0, 0
+	      POP   0, 1
+	      RET   0, 0
+.literal    12   3.140000
