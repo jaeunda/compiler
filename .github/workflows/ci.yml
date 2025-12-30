@@ -22,3 +22,6 @@ jobs:
             gcc ./02-rd-parser/rd-parser.c -o rd-parser
             gcc ./03-LR-parser/LR-parser.c -o LR-parser
             cd 05-c-language-parser && cc main.c lex.yy.c y.tab.c
+            cd 06-c-syntax-analyzer && make && make clean
+            cd 07-c-semantic-analyzer && make && make clean
+            cd 08-code-generator && make && make clean
